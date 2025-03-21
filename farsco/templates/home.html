@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/static/icons/favicon.ico">
     <title>فارسکو - تعمیرات هواپیمایی</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -157,32 +158,42 @@
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <div class="flex-shrink-0 flex items-center">
+                        
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:space-x-8 sm:space-x-reverse">
-                        <a href="#" class="border-primary text-apple-text dark:text-apple-text-dark border-b-2 px-1 pt-1 inline-flex items-center text-sm font-medium">
+                        <a href="/" class="{% if request.path == '/' %}border-primary text-apple-text dark:text-apple-text-dark border-b-2{% else %}border-transparent hover:border-gray-300 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white border-b-2{% endif %} px-1 pt-1 inline-flex items-center text-sm font-medium">
                             خانه
                         </a>
-                        <a href="#services" class="border-transparent hover:border-gray-300 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white border-b-2 px-1 pt-1 inline-flex items-center text-sm font-medium">
+                        <a href="/services" class="{% if '/services/' in request.path %}border-primary text-apple-text dark:text-apple-text-dark border-b-2{% else %}border-transparent hover:border-gray-300 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white border-b-2{% endif %} px-1 pt-1 inline-flex items-center text-sm font-medium">
                             خدمات
                         </a>
-                        <a href="#courses" class="border-transparent hover:border-gray-300 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white border-b-2 px-1 pt-1 inline-flex items-center text-sm font-medium">
+                        <a href="/courses" class="{% if '/courses/' in request.path %}border-primary text-apple-text dark:text-apple-text-dark border-b-2{% else %}border-transparent hover:border-gray-300 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white border-b-2{% endif %} px-1 pt-1 inline-flex items-center text-sm font-medium">
                             دوره‌ها
                         </a>
-                        <a href="#about" class="border-transparent hover:border-gray-300 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white border-b-2 px-1 pt-1 inline-flex items-center text-sm font-medium">
+                        <a href="/about/" class="{% if '/about/' in request.path %}border-primary text-apple-text dark:text-apple-text-dark border-b-2{% else %}border-transparent hover:border-gray-300 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white border-b-2{% endif %} px-1 pt-1 inline-flex items-center text-sm font-medium">
                             درباره ما
                         </a>
-                        <a href="#contact" class="border-transparent hover:border-gray-300 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white border-b-2 px-1 pt-1 inline-flex items-center text-sm font-medium">
+                        <a href="/contact/" class="{% if '/contact/' in request.path %}border-primary text-apple-text dark:text-apple-text-dark border-b-2{% else %}border-transparent hover:border-gray-300 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white border-b-2{% endif %} px-1 pt-1 inline-flex items-center text-sm font-medium">
                             تماس با ما
                         </a>
                     </div>
                 </div>
                 <div class="hidden sm:ml-6 sm:flex sm:items-center">
-                    <a href="/login" class="ml-3 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition">
-                        ورود
-                    </a>
-                    <a href="/registration" class="ml-3 py-2 px-4 border border-primary rounded-md shadow-sm text-sm font-medium text-primary dark:text-white bg-transparent hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition">
-                        ثبت‌نام
-                    </a>
+                    {% if user.is_authenticated %}
+                        <a href="/dashboard/" class="ml-3 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition">
+                            داشبورد
+                        </a>
+                        <a href="/logout/" class="ml-3 py-2 px-4 border border-primary rounded-md shadow-sm text-sm font-medium text-primary dark:text-white bg-transparent hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition">
+                            خروج
+                        </a>
+                    {% else %}
+                        <a href="/login/" class="ml-3 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition">
+                            ورود
+                        </a>
+                        <a href="/registration/" class="ml-3 py-2 px-4 border border-primary rounded-md shadow-sm text-sm font-medium text-primary dark:text-white bg-transparent hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition">
+                            ثبت‌نام
+                        </a>
+                    {% endif %}
                 </div>
                 <div class="-mr-2 flex items-center sm:hidden">
                     <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-apple-text hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary">
@@ -198,30 +209,39 @@
         <!-- Mobile menu, show/hide based on menu state. -->
         <div class="sm:hidden hidden" id="mobile-menu">
             <div class="pt-2 pb-3 space-y-1">
-                <a href="#" class="bg-primary bg-opacity-10 text-primary dark:text-primary block pr-3 pl-4 py-2 border-r-4 border-primary text-base font-medium">
+                <a href="/" class="{% if request.path == '/' %}bg-primary bg-opacity-10 text-primary dark:text-primary block pr-3 pl-4 py-2 border-r-4 border-primary text-base font-medium{% else %}border-transparent text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white block pr-3 pl-4 py-2 border-r-4 text-base font-medium{% endif %}">
                     خانه
                 </a>
-                <a href="#services" class="border-transparent text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white block pr-3 pl-4 py-2 border-r-4 text-base font-medium">
+                <a href="/services/" class="{% if '/services/' in request.path %}bg-primary bg-opacity-10 text-primary dark:text-primary block pr-3 pl-4 py-2 border-r-4 border-primary text-base font-medium{% else %}border-transparent text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white block pr-3 pl-4 py-2 border-r-4 text-base font-medium{% endif %}">
                     خدمات
                 </a>
-                <a href="#courses" class="border-transparent text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white block pr-3 pl-4 py-2 border-r-4 text-base font-medium">
+                <a href="/courses/" class="{% if '/courses/' in request.path %}bg-primary bg-opacity-10 text-primary dark:text-primary block pr-3 pl-4 py-2 border-r-4 border-primary text-base font-medium{% else %}border-transparent text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white block pr-3 pl-4 py-2 border-r-4 text-base font-medium{% endif %}">
                     دوره‌ها
                 </a>
-                <a href="#about" class="border-transparent text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white block pr-3 pl-4 py-2 border-r-4 text-base font-medium">
+                <a href="/about/" class="{% if '/about/' in request.path %}bg-primary bg-opacity-10 text-primary dark:text-primary block pr-3 pl-4 py-2 border-r-4 border-primary text-base font-medium{% else %}border-transparent text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white block pr-3 pl-4 py-2 border-r-4 text-base font-medium{% endif %}">
                     درباره ما
                 </a>
-                <a href="#contact" class="border-transparent text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white block pr-3 pl-4 py-2 border-r-4 text-base font-medium">
+                <a href="/contact/" class="{% if '/contact/' in request.path %}bg-primary bg-opacity-10 text-primary dark:text-primary block pr-3 pl-4 py-2 border-r-4 border-primary text-base font-medium{% else %}border-transparent text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white block pr-3 pl-4 py-2 border-r-4 text-base font-medium{% endif %}">
                     تماس با ما
                 </a>
             </div>
             <div class="pt-4 pb-3 border-t border-gray-200 dark:border-gray-700">
                 <div class="space-y-1">
-                    <a href="/login" class="block pr-3 pl-4 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
-                        ورود
-                    </a>
-                    <a href="/registration" class="block pr-3 pl-4 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
-                        ثبت‌نام
-                    </a>
+                    {% if user.is_authenticated %}
+                        <a href="/dashboard/" class="block pr-3 pl-4 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
+                            داشبورد
+                        </a>
+                        <a href="/logout/" class="block pr-3 pl-4 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
+                            خروج
+                        </a>
+                    {% else %}
+                        <a href="/login/" class="block pr-3 pl-4 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
+                            ورود
+                        </a>
+                        <a href="/registration/" class="block pr-3 pl-4 py-2 text-base font-medium text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700">
+                            ثبت‌نام
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -507,11 +527,11 @@
                             <div class="mt-8 flex gap-4 justify-center lg:justify-start">
                                 <a href="tel:+982112345678" class="flex items-center text-gray-500 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition">
                                     <i class="fas fa-phone text-primary ml-2"></i>
-                                    ۰۲۱-۱۲۳۴۵۶۷۸
+                                    021-44636386-7
                                 </a>
-                                <a href="mailto:info@farsco.ir" class="flex items-center text-gray-500 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition">
+                                <a href="mailto:fars@farsco.com" class="flex items-center text-gray-500 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition">
                                     <i class="fas fa-envelope text-primary ml-2"></i>
-                                    info@farsco.ir
+                                    fars@farsco.com
                                 </a>
                             </div>
                         </div>
@@ -608,7 +628,7 @@
                 </div>
             </div>
             <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-500 dark:text-gray-400 text-center md:text-right">&copy; ۱۴۰۳ تمامی حقوق برای شرکت تعمیرات هواپیمایی فارسکو محفوظ است.</p>
+                <p class="text-gray-500 dark:text-gray-400 text-center md:text-right">&copy; 1404 تمامی حقوق برای شرکت تعمیرات هواپیمایی فارسکو محفوظ است.</p>
                 <div class="mt-4 md:mt-0 flex space-x-6 space-x-reverse">
                     <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-primary">قوانین و مقررات</a>
                     <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-primary">حریم خصوصی</a>

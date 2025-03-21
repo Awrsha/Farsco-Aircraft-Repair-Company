@@ -1,0 +1,675 @@
+{% extends "base.html" %}
+
+{% block title %}درباره ما | فارسکو{% endblock %}
+
+{% block extra_css %}
+.counter-card {
+    transition: all 0.3s ease;
+}
+
+.counter-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.team-card {
+    transition: all 0.3s ease;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.team-img-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.75rem;
+}
+
+.team-img-container img {
+    transition: all 0.5s ease;
+}
+
+.team-card:hover .team-img-container img {
+    transform: scale(1.05);
+}
+
+.team-social {
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    padding: 1.5rem 0 0.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.team-card:hover .team-social {
+    bottom: 0;
+    opacity: 1;
+}
+
+.timeline {
+    position: relative;
+    margin: 2rem auto;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background-color: rgba(93, 92, 222, 0.2);
+    top: 0;
+    bottom: 0;
+    right: 50%;
+    margin-right: -1px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+.timeline-content {
+    position: relative;
+    width: calc(50% - 2rem);
+}
+
+.timeline-item:nth-child(odd) .timeline-content {
+    margin-right: calc(50% + 2rem);
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #5D5CDE;
+    border-radius: 50%;
+    right: 50%;
+    top: 0;
+    transform: translateX(50%);
+    z-index: 10;
+}
+
+@media (max-width: 768px) {
+    .timeline::before {
+        right: 2rem;
+    }
+    
+    .timeline-content {
+        width: calc(100% - 4rem);
+        margin-right: 4rem !important;
+    }
+    
+    .timeline-dot {
+        right: 2rem;
+    }
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(90deg, #5D5CDE 0%, #8A89FF 100%);
+}
+
+.facility-card {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(209, 213, 219, 0.5);
+}
+
+.dark .facility-card {
+    border: 1px solid rgba(55, 65, 81, 0.5);
+}
+
+.facility-card:hover {
+    border-color: #5D5CDE;
+    transform: translateY(-5px);
+}
+
+.facility-icon {
+    transition: all 0.3s ease;
+}
+
+.facility-card:hover .facility-icon {
+    color: #5D5CDE;
+    transform: scale(1.1);
+}
+{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in">
+    <!-- Hero Section -->
+    <div class="relative bg-white dark:bg-gray-900 py-20">
+        <div class="absolute inset-0 z-0 opacity-10 dark:opacity-20">
+            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <defs>
+                    <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.5" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" />
+            </svg>
+        </div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                    درباره <span class="text-primary">فارسکو</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300">
+                    بیش از دو دهه تجربه در ارائه خدمات تخصصی تعمیر و نگهداری هواپیما با بالاترین استانداردها
+                </p>
+                <div class="mt-8 flex justify-center">
+                    <div class="h-1 w-20 bg-primary rounded"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Company Overview Section -->
+    <div class="py-16 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                        شرکت تعمیرات هواپیمایی فارسکو
+                    </h2>
+                    <div class="prose prose-lg dark:prose-invert">
+                        <p class="text-gray-600 dark:text-gray-300">
+                            شرکت تعمیرات هواپیمایی فارسکو در سال ۱۳۸۰ با هدف ارائه خدمات تخصصی تعمیر و نگهداری هواپیما تاسیس شد. ما با بیش از ۲۰ سال سابقه درخشان، امروز به یکی از معتبرترین شرکت‌های این صنعت در کشور تبدیل شده‌ایم.
+                        </p>
+                        <p class="text-gray-600 dark:text-gray-300 mt-4">
+                            فارسکو با اتکا به دانش فنی متخصصان مجرب و بهره‌گیری از تجهیزات پیشرفته، خدمات گسترده‌ای را در زمینه تعمیر و نگهداری انواع هواپیما مطابق با استانداردهای بین‌المللی ارائه می‌دهد.
+                        </p>
+                        <p class="text-gray-600 dark:text-gray-300 mt-4">
+                            ما همواره تلاش کرده‌ایم با ارتقای مستمر کیفیت خدمات و به‌روزرسانی دانش فنی، پاسخگوی نیازهای صنعت هوانوردی کشور باشیم و با رعایت دقیق استانداردهای ایمنی، نقش مهمی در حفظ و افزایش عمر ناوگان هوایی کشور ایفا کنیم.
+                        </p>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-0 bg-primary opacity-10 rounded-2xl transform rotate-3"></div>
+                    <div class="relative bg-white dark:bg-gray-700 rounded-2xl overflow-hidden shadow-xl p-1">
+                        <div class="aspect-w-16 aspect-h-9">
+                            <img src="https://s6.uupload.ir/files/img-03_ur4d.jpg" alt="هانگار تعمیرات هواپیما" class="object-cover w-full h-full rounded-xl">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mission & Vision Section -->
+    <div class="py-16 bg-white dark:bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">ماموریت و چشم‌انداز</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    تعهد ما به ارائه خدمات با کیفیت و تلاش برای پیشرفت صنعت هوانوردی کشور
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- Mission -->
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 shadow-md">
+                    <div class="rounded-full bg-primary/10 dark:bg-primary/20 w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-bullseye text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">ماموریت ما</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        ماموریت فارسکو ارائه خدمات تخصصی تعمیر و نگهداری هواپیما با بالاترین استانداردهای ایمنی و کیفیت است. ما متعهد هستیم با بهره‌گیری از دانش فنی روز دنیا و نیروی انسانی متخصص، ایمنی پرواز و طول عمر ناوگان هوایی کشور را تضمین کنیم.
+                    </p>
+                    <ul class="mt-6 space-y-2 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            ارائه خدمات با کیفیت و مطابق با استانداردهای بین‌المللی
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            تامین ایمنی پرواز و افزایش طول عمر هواپیماها
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            تربیت نیروی انسانی متخصص در حوزه تعمیر و نگهداری هواپیما
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            بومی‌سازی دانش فنی و کاهش وابستگی به خارج از کشور
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Vision -->
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 shadow-md">
+                    <div class="rounded-full bg-primary/10 dark:bg-primary/20 w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-eye text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">چشم‌انداز ما</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        فارسکو در نظر دارد تا سال ۱۴۱۰ به عنوان یکی از برترین شرکت‌های تعمیر و نگهداری هواپیما در منطقه خاورمیانه شناخته شود و با گسترش خدمات خود، نقش مهمی در ارتقای صنعت هوانوردی ایران و کشورهای همسایه ایفا کند.
+                    </p>
+                    <ul class="mt-6 space-y-2 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            تبدیل شدن به قطب تعمیر و نگهداری هواپیما در منطقه
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            توسعه مرکز آموزشی فارسکو و تربیت متخصصان برای منطقه
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            کسب تمامی مجوزهای معتبر بین‌المللی در صنعت تعمیر و نگهداری هواپیما
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            گسترش خدمات به کشورهای همسایه و منطقه خاورمیانه
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Key Achievements/Stats Section -->
+    <div class="py-16 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">دستاوردهای کلیدی</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    بیش از دو دهه تلاش برای تامین ایمنی پرواز و توسعه صنعت هوانوردی کشور
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Stat 1 -->
+                <div class="counter-card bg-white dark:bg-gray-900 rounded-xl p-6 text-center shadow-md">
+                    <div class="text-lg font-bold text-primary mb-2">۲۰+</div>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">سال تجربه</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">بیش از دو دهه تجربه در صنعت تعمیر و نگهداری هواپیما</p>
+                </div>
+                
+                <!-- Stat 2 -->
+                <div class="counter-card bg-white dark:bg-gray-900 rounded-xl p-6 text-center shadow-md">
+                    <div class="text-lg font-bold text-primary mb-2">۵۰۰+</div>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">متخصص مجرب</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">بیش از ۵۰۰ متخصص با تجربه در زمینه‌های مختلف</p>
+                </div>
+                
+                <!-- Stat 3 -->
+                <div class="counter-card bg-white dark:bg-gray-900 rounded-xl p-6 text-center shadow-md">
+                    <div class="text-lg font-bold text-primary mb-2">۱۰۰۰+</div>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">هواپیمای تعمیر شده</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">بیش از هزار هواپیما تعمیر و بازسازی شده</p>
+                </div>
+                
+                <!-- Stat 4 -->
+                <div class="counter-card bg-white dark:bg-gray-900 rounded-xl p-6 text-center shadow-md">
+                    <div class="text-lg font-bold text-primary mb-2">۲۴/۷</div>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">پشتیبانی</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mt-2">پشتیبانی شبانه‌روزی و خدمات اضطراری</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Company History/Timeline Section -->
+    <div class="py-16 bg-white dark:bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">تاریخچه فارسکو</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    نگاهی به مسیر رشد و توسعه شرکت تعمیرات هواپیمایی فارسکو از ابتدا تاکنون
+                </p>
+            </div>
+            
+            <div class="timeline">
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                        <div class="text-lg font-bold text-primary mb-2">۱۳۸۰</div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">تاسیس شرکت فارسکو</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            شرکت تعمیرات هواپیمایی فارسکو با هدف ارائه خدمات تخصصی تعمیر و نگهداری هواپیما تاسیس شد.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                        <div class="text-lg font-bold text-primary mb-2">۱۳۸۵</div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">اخذ گواهینامه‌های ISO</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            فارسکو موفق به اخذ گواهینامه‌های ISO 9001 و سایر استانداردهای مدیریت کیفیت شد.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                        <div class="text-lg font-bold text-primary mb-2">۱۳۹۰</div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">افتتاح مرکز آموزش</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            مرکز آموزش تخصصی فارسکو با هدف تربیت نیروی متخصص در صنعت هوانوردی افتتاح شد.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                        <div class="text-lg font-bold text-primary mb-2">۱۳۹۴</div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">گسترش فعالیت‌ها</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            فارسکو با گسترش فعالیت‌های خود، خدمات تعمیر و نگهداری را به انواع جدیدی از هواپیماها گسترش داد.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 5 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                        <div class="text-lg font-bold text-primary mb-2">۱۳۹۸</div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">توسعه تجهیزات پیشرفته</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            خرید و نصب تجهیزات پیشرفته تعمیر و نگهداری هواپیما و به‌روزرسانی سیستم‌های موجود.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 6 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                        <div class="text-lg font-bold text-primary mb-2">۱۴۰۲</div>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">بومی‌سازی تکنولوژی‌های پیشرفته</h3>
+                        <p class="text-gray-600 dark:text-gray-300">
+                            فارسکو موفق به بومی‌سازی برخی از پیشرفته‌ترین تکنولوژی‌های تعمیر و نگهداری هواپیما شد.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Team Section -->
+    <div class="py-16 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">تیم مدیریت</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    متخصصان و مدیران با تجربه فارسکو که هدایت این مجموعه را بر عهده دارند
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Team Member 1 -->
+                <div class="team-card bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-md">
+                    <div class="team-img-container">
+                        <img src="data:image/jpeg;base64,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" alt="مدیرعامل" class="w-full aspect-square object-cover">
+                        <div class="team-social">
+                            <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">دکتر علی محمدی</h3>
+                        <p class="text-primary text-sm mb-2">مدیر عامل</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">
+                            دارای بیش از ۲۵ سال تجربه در صنعت هوانوردی و مدرک دکترای مهندسی هوافضا
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Team Member 2 -->
+                <div class="team-card bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-md">
+                    <div class="team-img-container">
+                        <img src="data:image/jpeg;base64,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" alt="معاون فنی" class="w-full aspect-square object-cover">
+                        <div class="team-social">
+                            <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">مهندس رضا حسینی</h3>
+                        <p class="text-primary text-sm mb-2">معاون فنی</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">
+                            متخصص در تعمیرات موتور هواپیما با بیش از ۲۰ سال سابقه و گواهینامه‌های معتبر بین‌المللی
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Team Member 3 -->
+                <div class="team-card bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-md">
+                    <div class="team-img-container">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQP81douDtNeRtDMJH8uc_7IJSIiJWBIQZ1DA&s" alt="مدیر آموزش" class="w-full aspect-square object-cover">
+                        <div class="team-social">
+                            <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">دکتر فاطمه کریمی</h3>
+                        <p class="text-primary text-sm mb-2">مدیر آموزش</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">
+                            متخصص آموزش‌های هوانوردی با سابقه تدریس در دانشگاه‌های معتبر و مراکز آموزشی بین‌المللی
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Team Member 4 -->
+                <div class="team-card bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-md">
+                    <div class="team-img-container">
+                        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxITEhUTExMVFRUWGB0VFRcXFxcaFRcYFhcXFxgXFxYYHSggGBolHRgVITEiJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGhAQGy0lHyY1LS0tLy0tLS0tLS0tLS0vLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIALcBEwMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAEAAIDBQYBBwj/xABCEAACAQIEAwYDBgMGBgIDAAABAhEAAwQSITEFQVEGEyJhcYEykbFCcqHB0fAHUmIUI1OSouEVFjNDc4Ik8URUY//EABkBAAMBAQEAAAAAAAAAAAAAAAECAwQABf/EAC4RAAICAgIBAwMDAgcAAAAAAAABAhEDIRIxQQQTYSJRgTKRsQXwFEJEYnGh8f/aAAwDAQACEQMRAD8A8t7jeu27elWTWaZ3OlQaLAmXSjLm59B9BTGtaURcTU+30FI1o47aO1GJsKCC6USDtS8Uc0GJUrRI9PzFCq1TWlZjAEwJ9hEn5U6pCUEAiaSHWpDZTXKxdgAT4YXUwRvJiR03qWzhwRH/AHP5FB0AkktJMbe250pVNLwNwOWzUqnSo+63yyeYBHiKwTm00Ij5VxH0rVD6ouSWkRkknT7Lfgh8HuavcORWc4ZchJPLU1Y4Xjtk/BavOOehEe6zReVQq7/ByxuRo8OaPFwRVLYx6uJW2yQY8RMn0BUQPnV/wzCI6F3b0UEZjGpMa1VTXHkT4O6KLj7SLX/lX86Nqt44dUGul1YmPONqtMKbepuFhERlgnUxJUmY2GnWu5qrDxd0T2aLz1BhxaeBbeT0fKn4E5vwqN7sbmI36UscikM40SXXqn4b8d/7/wCVX2HtYdgJvgsdlUaz0A3NVrYLunfWQ7ZhIg+6/nRWSLdJncH2JkmuLbq64RgBcBJO3z+VdxfCtYRgT0OlM5pdicWynAqs7QDwJ/5F+pq3w+Hd2yKNRv0EdTSxHCFu+A3lDIwYiJPh5akfOhPLGC+pnRg30ANVddTWrrGcPZFzgh0/mUyBy1qpJoxyRmri7F4tdkPd1FcWKJuEUDirmlc2FIoeJCbr+1CutTX38bev5morr1FlEgG/vQjDWiru9DEUjHSIgtKnilXBo7krnd0QBSilKgvd13Lv++QqdtqjApTiIinHlTiKUUjGo6DVlgnI0ygyVBkTM8h7fWq6rO8jC42WAqvpqAJHw7+VJyQeIrV6Wkxz0ygbzqYHnPtXbbFSQPDyPXfY+XlSSwxgxuYB0iamt4UjfntvJg6/KhyQeIsOWzZl8JDSIMAEnSJrgIzMAI0BI6EkyPw/GiEEeAA5tiIXKSDmzEnkF67R61HgrYKm5vndgD1VQsH3JY+9VjJ9Ij9MnL/b/L8f81b/AB8ot+zuDNwHoN/fQfnVlbt2FMZo11hWj8BV52Xw9m3gWfOpuEFiJEg7KCPx96zBTWJA5STAHmTVXjfLlYFPVUHWUd83d8tidh0mrXsvbxOdVu3GaMwUlfCvhby196GbiKWUVLJVz9pjqPXQ7n8AKba4vccgE2wJzHdQcviyli0AEiPejblutAaS15OdqLZV7YJBOdDMROh1IOx61ZcBxbsL1vuiko2S5lMvlMkTPSY0qq4/iku3rTZgFlSxJGmXNMwY26dav/8AjaLiLUMO7UZSwIjxjUztA8PyNNd0hAXh3EQhYhAzDQFkYFTy1YDTnoKhu3LJB79GdeWVipB6yGXTXrU/aG/aa4HtMpDCGgg+Ic9DzBHyrtu1h2QRdCnnmYBvQg0WvpDdvRVDiOHY9zbzDQgBnDkxv4gTy6mg7HFUss/eBnBdhAbUBRvJ3O1HYm1h1abagtzb6x19aG4CbRe6LoEG4YYiQPI9B50lS4UN9PIvbfECBlVny8gxlvcihXxMHNpPX86IfA2jqL6R95T8jNU164DIG2oE71WLVUTad2GYPjlpg4tEllAUnNKEtPiyxHI86rOOXpQE6nMNTvz50Pw7hqIZttlJ0ZWYeoInceY6+1d4laOz3LarMz8TH0X/AO6hGSinfZaWO3roscF2otqO4ZLjuZBJIyBSCZ1HIH1NV/8AaKAyKGZgWZm3ZtWPy0A8vSmtdrsK4Jv7izin0GXcVQd+9IoZ71Dve0qrnYqgD4g+I/vmahc0663iP761HcOtI2NRE+9QMtEFdaWSuOoFy0qmy0qJwkNKaHttUiNpULLUPYaUxK6W0pls6V1nVs6a4KTHSlU2x0h1Xfc3ZkI3iRR8La5QAGHqB+JqkBrWcN/iFi7FtLKpadUAVSy3C0DYHK0aCBtsKW4+RH6TPnmlhnxfzVf9jcHgMW2ULh3YCQQbRytLFjmJG3uNhRt3s3dtqbuLvJhkJk5mlyR/LbT4m95ozE9r8RdsAjEi3dLRkS2qgLG5uXSdPTWsjiMKzsbl673rdWuq5+WYk0inD/Kv3OX9Of8AqM7fxHV/ml+9smxWKR5t4dWWzszvHe3vKBoiT9kb8yeRAMAL/L9Tv+Q9qDS50+f6frRFk6Vpx/c6fBRUMceMV0l/Py35ZZcKdikCf3FS3AavuwFtbeRrjIGu6IjTOTm2gOpggAxzPSjcS9suigJnvKinQRbtgf3j+TGDHSD5Vo8EPJkwakU1psNgbRNxiLYa4rtbtn4kthGKMFj4zCnyHmacqoBlZLQ7q0mdsi/9a74UDHmFDAnzQ0UAyONJ8H3xRPe1qTw4ZnsvZtrbIyWWIBus5IC3A0yRuxjQDSheKrhxZN+2qxcHdWxGxR2z3PIlFTX+uiAo++roepeC2A75n/6dsZ389YVfVmIHzq/u8KtBmURrfIY8ktoGdgPRcsnq0cq44zuc0Nw99bn3zWoxuFt98yLbzNbQvlRWAuZiCmgJOUKRJ0mq3ittURAUS3dOZnVBEAxlzLOjb+0UOWw0CZqY1WHZ/Dq7OWU3MiFxbEy5kADTWNdYq4/s6HDtcawq3M2QKLdwqMvUBvCTOWSdxXWdRkXNV/Em8K/eH51ocbw/KrsCrZGNogAibmgECddyf/WormCU55RCLUAsq3GGeJY5QScq69PWseT1cYK2n/f/AKaI4W/KKHvKhd96vOI92lqMiFmA1UMCjzmYEzEBWAA19azrNQhm5q6oZ46ZG70Ncen3Goa4dqpyFo6x1rjb0xmpE09i1okUV2ow2tINTJgo5pSrmauUbF4lej1Ij0Er05bulZbNAbm0riNpQhvaVJm3rnLRyWwhm0pTtUOanFtqnYxKW1qS3cgn986GLa05W/fvRQGWlq7Tlaq9LutPS7qaCQWywtvRCNpVWt3SpVxGlXiSkWmCueH99BRIu1VYW74f30FErdqliUGh6kV6CD1IrUbBQ7Fv8O3xVMblA4pvh+9UgajYKChdp63z1Pz670JmpB6NgoO77zobBXfi+8ajW5UWDb4vvH8qFhos0vxsYPlTjjGiMxjeJMdaBL1G1yg2FIIuXz1PXfn19aDxd46anU6677701rlCYy5t60jHJzeJ5mN4nSevrUWah7VyuG5vUWUHXGqBjTWeuE0UcJzSzVCzafL6UmfWqNiolz0i+9Q59a4GopgaHilTA1KmsBVZ6kw1tnIVFLMdgASfkKGBrWdm8W9pItqM7H4o2HrWSbaWuyqryVx7P4nmkHoWAP4mgrqspIIIIJ0PrXo2HvoBLjM0/a1nr7UN2n4dZu2LjIAtxF7zbWF3B9q6pKP1CKVyMBm0FcfFr12oLH38qGNzoKXZ/FKXS26hlZgG6608YWrOlOnSLIPTw2/t9a0Pazs5Zsot2wWjZ1JmOQPUa1lg+/t9aWDUtoaSa0wpG1pyPvQqvXbbb01AsLD6V0PpQivpUitpToVlnYfQfvkKKR6r7TaD98hRNtqYAcGqZWoINUoemsFD8S3w+tOz0JffUetPDV1gCc9LPUGauF6NnUTq9Mwr6H1NRZ6iw77+tCw0H56jZ6h7ymG5QbCSF6FxbbURdwzqDK7b+XrVfiGoWHwJH3phuVEr0xm0qbGRJ3tda5oKN4JwHEYqe6QEAwWJAUe539qM432Tv4a0blxrcKQpysZ16SNa460ULvt++VNL61E12ApII002kx67UXbxeHZYdGRuTKwMeqn4h8qZ32KpIHD60hcqJ9DvPQ0wmuGCO+pUIWpUbFBkNScN4w6iIPTWY51q+BcEZVDLBYxnBAMEa6AiCBVti+H2m1u24bmyrM+q/oaS2ulYOUW6booOD4u5eIztCDeepjQVqcPhQFvmwWa41shVcjUAGSsDc7QfLzivxmERbM2wGQH4l5Hz5g+Rq24RjrdsDGuwFtJYyRmNwD/pgDqYIPQ9aypzyzpr8GqoQhd/k8tv8Me53Z5FgDJgwY1rY4ThNgYm3cERGgCkADKFCxGhDZpPp7CPi7d4FcjAEkzB0k+mlWnC8WgBS4ga8CCjwCtyNy4OxjcjUwNzt6mT0UpJcWefD1ai3yRadouC41cLfe5ctm2qiFyrsCCfFJ8Ufvp5uDv7fWtJ2q7bXMSvcqISfE2ktBmJAHh0561lQ+h9vrWd44QdQLLJOe5EytXbTb0OH3rlm5oaFBsMU6VqOB9n1upmZraicuZ3gFuihTNY3vq9e7DWsJdtS1pWVfEgYzBfxEEE77HX9KWXJtRj5OTik5S8GGx2FazcNtssjo0iPX9a4hq8/ibatJiUa2ioXDF8ogE+GCRyOprNpcqnFrTFjJSVoOBpwahQ9GcMwdy/dW1aGZ2mBIGwJOp20FEJDdbUU/PVriuyWOUj/wCO5+7DfQ1V4/CXbLBbqMhIkBhBiYmPY1wBB6aXofvKablE4JL1HaaoTcqJbtccFtdo7gWItK2e4QAGG4J3nkNzpVGzEnSr7sTxFbGKi4BDodwCAQVgwdzGb8fOj7UprX7ivLGPf7GgxV+wzgDO1widEZVh15AjLJEVhsSYkf78xzFeqca7RYdsO5VknLoQFmRyBk6mCB615Rh7DMDmaWBgnrMGfWjj9JkjauzpepxvdUQg00Gu3lKmDUAfQ1KUXF0ykZJq0e1djb1lLSJbgLHhJjMx+0zeZ/e1FdrcJau4W5ng5QWB3AOozHyAJM15l2Yx1zKqhLrANGdSMqbnWfL961r8Ktu7dt+NzBIdQ7ANmU7gb65flWb3Gm4y78F1iX6l+TCdo8AHtI9tgwTcqRovUgdOlUTcJvtqFUEDNkJIdl9Igf8AsQa9a4vwuzYszh7cOWhxLMQpVid/h1A261SYXCJcKAiCoga6oCZOkc6V5Z4Vxex44seZ8jzXDYrMxWIgTHTy/GiZ3rR9qOC2LB/uz/eg+NRrCkfaPJpiF6bxpOZzaGtm2lJqrMySTaTuiOa7UYNKuAb2zj1tzBpf8euMdSgHINH1NZ7FXJ8M/LWosPhbE6gZv6wfzmjFIk0aiwSX7y2wtvs0FWRh0ZZ+tZbi3eIO7YnIjFvBIAZtyV3B205DbSjHw2HiFUBuloqreoLFfzrlod7mt3CyXkEJcgByp1CuJyuN9JjzqsXTsm7qiqs3jHxll8ySPUMNRU+Hx727gQsSDrbYnxA9C3MedDvhmRtcikz8OYK4G5XUQRzXcVBxL4V8JDKZBMkEeRmtsJ2rRnlHewnGYJnIa0rMDOYAaqw0MgbVEOHX4P8AdXOX2TR3Ab+a6viyi54DOwu6BM3QN8JPWD1rXcNwhurcfMFW0crz8QIMER6/7TXnesU4S5QVr+Dd6ZwkuMns8/8A+HX9f7m5/kb9Khs2yRMaAwT6/vlW349eW0jAvGZWCHUSYOkjY1p+y+I4ZbwVuzcw5zFFN4Nh3cvcgFjmK6wdumkVDDNyVtFcsOLqOzyoWRHn571Z8MvXAwAzZQIZkIzgfdbR1Guh9qh4xwoWrxNpbhsq5yM6OsoQcoOYfFyJ5xNOwV4K41Ec/Q1tSg9My3JMZxQN3zEs7g6qz/ERsNPsjSY89qZbvQctWfEoZREkqdT5HTXprlqm7l8xOnKNV+VHJGPSOhJ2WK3anwmNe24uW3ZHX4WU6iRB0Oho7sXwhcTirdq7ohlmgiSF1y76TEaU7tfg7djF3bdhfApAEktlOUZl8W5BnXWsrL3uizsfxJxtsQ3dvHNkYk/Jh8qpuO9oLmLuC7cS2jZQoyBtQCSJzMddTtVJcDnkf3FdQuPskjp+h5UQUG2rTv8ACsx5jn6mnf2K9/ht+/StD/DjhyXsSLbhiGlmUyDlUbEqdNTv6U7GOEdwD4FdkDHY5TtO0xBjzqM8k49LRaEIS7ezLvh7o/7b/wCU0LdZl+JWHqCPrWrGMX+dfmKzvaS6zuoWWULy1EkmffQV2PLKTpoOTHGKtMiwBYhnGscuo5j1ozhCrcuKx18ax6B5/MUJhL2S3ljxRrvz9qP7FYJHuFbt+3ZHidc85SwjKrRGUHXWRtXrwlGEDypRlOZ6J23wNmxhMttFU3LgGgE83JJ5klRXm2LxwVmKoFnVVExIhQJJJ13963n8SsTbuW7fc37D5SzMBdSfh0gA+tYDg3C2v3JuMFtrqSp8RPIDcfp70I5oQhyb6C8U5ypIGx9kgBifX38qADaVpu0mAW1aVg4YOTlBgPpHKdfXSsqKyZ3GUuUfJqwqUVxfg1PY/tKMJnVpKPGwzZSJ8QUka6jnyFXtvieFNu5iczZbbHJazQ9xiZAkCQk+Z9hXnPKmYe4zdSpaVHUxHh9hqanjxc5dDzyOC0ej8F7UYm+CvdK9wKWVl8KgDdnB2G2s6mBVXe4obJbu2zXXJLXFkgE6nI2xOvxnT+Xk1Z84o2UaWJ7wiUB8LZJyqB0GY6+fpULYkgZm3Ow/fKvQXo8fLlLdGX/ETUaXkuLaAgyTJ1JBM/OqnHYbJJG30oV8YSYkgHQRXbWKJBRteWtXzwjkjQmOUouyHMKVXCdkcWQCLakESDnXUHXrSrxecfuehT+xUpj2kEgidj/vVph8eDuAR8zWdtNmBUjUbxvp/Tz9RTbGKKGNx+I9jrVXElZu8AynZwfIiDVk+Eslle4QqqDrmCKecM8HKPPy86w+HxKnr7Grzh3ECp3kdDXWI0a/urBYobQOQj4wSfhBB18jvzB6VFxXh9u5bhUVSvwgAAH+kiNqhtYoOoZfjtL4gPtWRO3nb1P3Sf5RRKsTrIA5VhlOePJaZuhGGTHVHntnhqSwFyAZVlKkEEdNZBBrWcOvWRe71izXXRLbD7LXG8Fx3UHYrEj1561U9pOzzXbhu2FdzlLXQhQHwj4gpILGOQ10rJDHOpVrZJjUQuUg9TBMnzmvVeWOfE0tP4PP9qWHIm+j0zjWDQhrcyrKQnOJBG/MidxuCp0mKyS8atLKFnlSQfC8gjQj4qs+D8UuPaliYkMpgASJVgNNQQRJ6oBUXc4ZHa4RNxjMkEwfIbL9a8+H02mbZvltGl4zibYs4HLlci0e8WVnMYKs0EnYsNR71mXS2TfJQSXs6ZtABcJgQOe3lVn2gtEZLhlEKqF8JBMIAdOY03HOhuHYUuwFt7rM0QoUnnpp59KtO4yoy4nzhyZqeyGKts2W4mHW1cDJca5dUOykfDldgYnLsOVXOL/hvwvECbBCQfE6XTcUmNFbMzAbzprtQ3ZjgV9bqpdw5KMfE92zOURyJECtbxfB4mzk/saWghMXBl25Z4WJEdNdKrbFaVmS7L9h7eGxBe9nR7TBrUXEYOsRMgDwscwggVl+1eHQYu9kYMC0lhEFmALazrrzre9t7l3uFtm4pdzPhUgBBBIPq2X5GvPTw55jMPkanJFYNXtlOrw0ETG8a7j8NqfatZh0G4jX8atMPwO4PtpqZ5/pUtrgFxdmTqN/0pFGTZTnEvf4c4m0tx0Iy3Sp7tgOgkqZ2OhIPPnOlaDi/AgMAyWgzlroveIqDmYFdSxAHKedY7CcAvlpUqPUsPyr0fCYPvMELBW2xABuKS4Q6hiVhp+ITuPTWKqsdraJymr+lnk+Nwd20QHTKSJHiU6eqyKqnwaNcum4SP8A47xsRmEZTyjX38q9DfhlslgMENCQGjEgHoQe8IPWs5xPs09sFmuuq7SbRAEnm23TWp+w4u10O8qkuL7KXhhsLZyOst9liddST1kanpVRdw65PFeCtEeK4QpI3OvIz0redn+xS4lGNvFW/DowNqSCZjWY5UVjuwGFRQuJF9zsHRLAWf6R3mf2/CqRRNujA4pMMbxNpxlIACZ8viKgHRTGrfMRtV0l63h7IBJVV0aTrmPIH+Y6+wJ5USP4e2Uuq1u/sZAvILcaSJcO3OOQqg7R4kiLTEk6m4FAYGCUCkg8srnTlcB6VHJbkk+i+Oqbj2Q4u5hLjMzYi5Lf02o6AfHsNoqsFm0fCt1TOg1EmdtBzo/Adir91FdLNwIwzKXKrmG0gM0xodYirfg3ZDuLguXMrOolUDZspPM8pA2AJ3ozzR8s6OBhidicPcsqHL27hALZSCAehEQfP61X43sliLALWwL86SvxKvTuzrA6LM1q7d/51U9oMeVtM+aAvhUf4r80+6B8R9usT9N6rKslR8j58GPhbMS9xA3jzZv6hBHlH2R5UDevF7hMwAIH+wpnFMSbjlwABAAUGYA8+ddwS+AmASTI69K9xTctM8txS2jl/b0qXvFbXZon1qBjprUNsaiOU/L9zQcqYyRuLV22VBLXJgTF66BoI2DQPQUqpMKjMoI2NKvDknb2ekqror+IYVrdxiAQp1kjTWmNnYaoGH4+xr1Tg3Z+y6nOM7Ts4BEchHSsD20wgw2IdbdsICQQmpQZhrlBPwyDAM6GKtiyxm6RDJCUdsoLTEHwq3mBrFF2ccBuTPPlVfce4w1YkdBt8hpUTJtV+KZK2azhHH8lxWRoZTm5wQB4hprqJGnU1shYCM1vOciw1s/zW7ii5bIMn7LAc9q8z4fwe6+ttoPKJB/2rb4K1cFu2t1pZEFskEwQpYr56Bo9qzZ4qtF8EqZa2sZbRwDmCSM5UnNE9aoeEcJXPlGoJIUNAAAky3oNTy0NG32X4SQI1ilYxyKGAZYOjaCY6TEgeQpcUvbTSfY2Ve41a6G8WvgEKPFyEaaDQEcwDy2oAG0BBtmeYzH8TyqxD2CSZEnfea7btYbbwn3Ov40iTb7QW0vDC+J4rP3aFXuQQtsZmOpGgUVruGdjMXaQZMtsnxHLdhwSIgtv5b1QDDpoYEjbfT9KscLbU861xgm7ZkvjHijZdnOB37Td5fvXGYSAneFk15kTqa0mevN7VgT4SZ3EDXT3rXWb918PluSrtKAmJIiM0DbenkqAk2rMLxfj1t7zyGYKSqkREKTqNdqBfidrfI28cv1qpvJlLLzByfIwfpXLkf3fpP0/3qayPov7USxfGpI0bWenKuW+JosHxfIfrUNxdEM6SfrQlxABH8pIPp+xU45HY8sMaNVhO0loRKv8h09amXtcgIyBwRJ1A16jfpWPs8x8vUbU03NZ96u80uiawx7PTcAcViLa3rJfK0kAXNBqfDGYRG3tTMTwniDqVbvCpEFTdBUg8iC2orG8C4kEMEwjGD0VuvpW14PhxeUvbu6BsjSG0beKaNSWyc04sl7HcAuYTvs6ZQ+Ur4g22bodNxV1xPAW7yZLgkAhgeaspkMOhBFZ/iFm7aICyRIYvqVMEQszoR+dT9ueI3UwzJhxmuvA01KoT42A3JidutKlukHb2Y/jvEVazJuLcVXyjIIcasNZOg8vSs5iMBhcSCp+IHKrRB9j+RoXsfjMJbW9axQdGa5mByXcw8IEPCwpkaDzNaLA4TBEMyuqgsYBuawI1I+yZ6bac9B0o61QYSS+5Fg8RirWVGyXLShsrknvFBy+DzXSdzOvkKHuX2uMbgPiJkj9OnpVvZXD28wS8kEyV7wFQTvAJ8PoKjOES60W4dv/AOZlvkKy5fTJ7j2XxZ2tSKu5ii3h1UgFnb7SoglyJ5xoJ5kVjuOu964NMqgZbaZtFUcvM8ydzWt4pgrqi5EuWhSIGYIpLMsEiSWW3/lNYG5jipKOpYT8Ozr+YNa/6fijBNz7I+syOTSj0Q4jhx1LFQffT1PIUyCsT8B8II5eRHUUerMR8F4qebLBH/tzFV2JQr4ZMHQTI+Y5jlW9yh2jIk/IxwdQaan4nT51x1bTMCD1IMGOho3hFkNdGb4UBuN91AWbT0FQyS02WgrdF6OPrhgLHdByiiTpuwDMPYkj2pVZYLsRdvILt27bt3LkuyG1mILEnU5tzv70qwe7jXk18Mn2LZeKtaOdeW/pUfaW7Y4hYOZctxASrjdTEkHqulNu3VyleREVTYNT/Z7yZ2Vy2VdJBWIJqGNLja00Uy/q30zF4W2I6k1ecG7NO5V7pyKIMfaMa69Kt+F8Mt2oyiW/mO/t0q8wWFd2yrGxMlgFEbyxMDUitLy29GXhois2EScgCjmf3vU9gDMvmRJPJZ1PkKExDZSQ/hIOXXeRppUSYlSxWdR+VZpyt9l4RpdGg7VphGw5ZGUOpGULEtJ2+U6npWHQSfLkP39auXuAasCB5j5UreKt/ltXTlzdnRXFVTKxROg3O9bnsRfwmFQvestdunaQpRV/pDcz1qptRG34VOqUca4uxck+So3n/NuC/wD1P9Fquf8AN+CH/wCJ/ot1jVShr1g1peRmfij0fhXGbN65mt2gqZYgqo1B1Ph05in9oO0VuyFLjUyEVdzEST0A0rDdnuJ9wtwNI5rAkE+fTlVVj+IPfJuXCJMIoGwUa6DzpebZSME2BvcLMSeZLH11NK4dLR6g/pUbLqfSPc6UZiLYlFgwq78poVtFWyW3rb9DP+oVBllyOsfiNPxFEWiApEfuaEcwfb6GRUorbKy6REqkNH7kV26NZ6/UVJivinr4vzp7CfqKt8k6GYcgHUSraN+Rrffw9xto2zhXChpzq0H+8A2aZ+IQKwSiD5EUVwy4QFymHQ5kPP0rk+LsE4co0er8Wv8Ad6LEEamPz/WqLB8XxZ0ZbWkDaTEKWJYaDdoAnYa1UcX7Rtet2mtorMJDgnVWEa7c9aBtcZuiYsgTvDka/wCWrXoglovuNcLtXkPwqwkq5WdSIyEgSFP4QK8y4jYa28MCNedbhuLXGWGthQY1Dkn5RUF0q3xorfeAP1pHG9lPca7A+y/alLaCxft2nticpZFMTvJiRv8AFrV5i+D4YAXrWKuYZXMEd5AJ3lGUEMP3ptVPcu4VDDW7YPLwD9Kgu4jDEAKlvyAUfgI9KSUfkHe6Zb3MBZMsuLVucs5M+fwa69Kz/G+E2XcwwcpAW9b8LAxOhBOnkflXo3ZDgtpbIZrShjr8IHppTe0vZpHRntgI8a5dM0bAxvQhGUQOUWeAcd7P4lCXW415esnOPVeftVLhmOUzyr1C/wCEEmIG9VGP4VaujMVgsJzLz/WrckxeDRhcLibk6OQOnL5Grnsvi0GKzOogKdFGhYCVJE7SBIG8edQ4/gly0CQM6wYK7+4rvZCwGxVlntu1vN4/CSsRsYGx2qk4px0LF09m7s8ebKIYDTYjX6V2q/E8OtM7FpkknUljvpLHUnzpV5Dxx+56SySojfzM063b5nQdTWrt/wAP8YedpT5sTHsBrU1r+F10mbuKHnlT6Sa0LFPwjK8kG9sx9+/Ai3pOmb7Rnp0q57PYk2iVzAAI8GASDlJYmd+fyFbDD/w1srB753jWDlEnlqNqxnHuB3sPnEGTpm/p6epqft5Yu2VWTFJUjH8WvM/iYkmfcz1pcL0vLmaSTr0UfrRFzA3dgh15/pUVvhFxfsmjWqO5bstOMX1LKiHN1jr0HnXqnYzsRYtWQ+KRHuvBhoItjko8+pry3hvD8viffkOlWoZjqSY9afDUPBLLJy0mexDgOC/wbPyFOHZ/Bj/s268hQnfaplun+Y/M1oWRfYzcWesjgOD/AMG3XG4Bg/8ACT5/715ULp5E08Xz1PzplNfYHEu/4gW7FvLZsoisfExHTYCscygQvSmYi+WcsRpsJqfDkxmA1O3p1pHt2aYaVE+EwOZwDpr+zUjWTmKFiNZM7Df9KJ4Vg3Yzrr4V+U127YY3DnmToCeWu5q0Yvi2JKStIjt4SbZYHRZU+R1I+dC4/CEZG3BkT0MbGjL4uAZM0ruY2JBMH60Pi7jZQoPhzAkcpgiazL9RZ3xE2A7yIIEAAg9IPi9OVQ28EQBqsg9eU09lMg67VEgGY+f5VRLQj7OYjCMJhSwnQjlXLmGezAYENAYeYOoNF3XZQGUkRIMfhXMQCyq7MWJGs7x0rkm38BYbw17aXFvOAbTaOsn5iOlek2Oz+CdQy2wQwkHM3P3rzfAYYKji4pYEArGwJ2JNO4LiGUm00gDVdfwq0YtKmRyNPaPSW7M4Q/8AaH+dv1pn/KuD/wAP/W/61i7gPU/OnAmNz86ZIi2ay92KwLCGtEj77/rUOA7I4XDuWRJkyM2pHlJrF4u43Jm+ZrV9i2PckkkmedTnFeUOpP7miAiosQZBpxeocQfCfSkZyR5Lx4BGZrglWZlBG59Rz9apuGIVOUmbbarz946+VHcYxVws6uM6hiVAHnFVZZhqgIEayOfSOfrWGcpX9KPShGNVIJxtrKYJGvwmfC3oeR8jTbGJdNJJHQ7e3Sqgd65OZWEbTtr0NS23ddIJHQ/lWqM21tGaWNeAxranWXE8tD+NKoReHmKVJ7URucj6GA8qcBXKVbDCcK86gxmFt3hkuLM0qVcceddqezTYY5kM2z818qzxPzpUqyZIpS0Wg7Q1LZ3NTBJpUqQLLzs/2fbEk+IKo+dWPH+yYsWu8VyY+KY28qVKrxS42I3syxEVBjL2VGPM6ClSpYhLjGWbT4BGH/UAHI7zlaq7h925bfOoBCqQZiCCI2pUqnhircfGysumbLh+GF10KmJAJjTUc6O7W8OS22ZANV0HpoTSpVqxq8fF9bJzVTVfBmLGpNs/bURHUN+hNNxvA7rA5QIzDWRtE1ylXnzm4vX97NU2C2oCoTqNj6ER+dPXh9p7yKkgMQJO/nSpVqlqNiPssu0HC1w6gKSyurb9Vj9afd7PKuEW+2vgViJPOP1pUqhCcnjj8sW2mmWfCuLWP7DfRxDREAHWR4dfI1lMAouXQDOn47RXaVehlfGFoSCudGp4nw4W1t+KSwlh02jX3oLJpSpVWPRml2wHFpWn7IiLXvSpVPINEuWemYpvCfSlSqDHPKMSnibzY/WhbluK5SphkQXbR5bVE1o+VKlSjjO6HUfj+lKlSpTj/9k=" alt="مدیر مالی" class="w-full aspect-square object-cover">
+                        <div class="team-social">
+                            <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="#" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white">مهندس محمد صادقی</h3>
+                        <p class="text-primary text-sm mb-2">مدیر توسعه کسب و کار</p>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm">
+                            متخصص در توسعه بازار و کسب و کار با تجربه همکاری با شرکت‌های بین‌المللی هوانوردی
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Facilities Section -->
+    <div class="py-16 bg-white dark:bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">امکانات و تجهیزات</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    بهره‌گیری از پیشرفته‌ترین تجهیزات و امکانات برای ارائه خدمات با کیفیت
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Facility 1 -->
+                <div class="facility-card bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm hover:shadow-md">
+                    <div class="mb-4 text-gray-400 dark:text-gray-500">
+                        <i class="fas fa-warehouse facility-icon text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">هانگارهای مجهز</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        هانگارهای وسیع و مجهز با امکان پذیرش همزمان چندین هواپیما برای انجام عملیات تعمیر و نگهداری
+                    </p>
+                </div>
+                
+                <!-- Facility 2 -->
+                <div class="facility-card bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm hover:shadow-md">
+                    <div class="mb-4 text-gray-400 dark:text-gray-500">
+                        <i class="fas fa-tools facility-icon text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">تجهیزات پیشرفته</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        استفاده از پیشرفته‌ترین تجهیزات و ابزارهای تعمیر و نگهداری هواپیما مطابق با استانداردهای روز دنیا
+                    </p>
+                </div>
+                
+                <!-- Facility 3 -->
+                <div class="facility-card bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm hover:shadow-md">
+                    <div class="mb-4 text-gray-400 dark:text-gray-500">
+                        <i class="fas fa-microscope facility-icon text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">آزمایشگاه‌های تخصصی</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        آزمایشگاه‌های مجهز برای انجام تست‌های غیرمخرب (NDT) و بررسی دقیق قطعات و سازه هواپیما
+                    </p>
+                </div>
+                
+                <!-- Facility 4 -->
+                <div class="facility-card bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm hover:shadow-md">
+                    <div class="mb-4 text-gray-400 dark:text-gray-500">
+                        <i class="fas fa-chalkboard-teacher facility-icon text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">مرکز آموزش</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        مرکز آموزش مجهز با امکانات شبیه‌سازی و کارگاه‌های عملی برای آموزش متخصصان تعمیر و نگهداری هواپیما
+                    </p>
+                </div>
+                
+                <!-- Facility 5 -->
+                <div class="facility-card bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm hover:shadow-md">
+                    <div class="mb-4 text-gray-400 dark:text-gray-500">
+                        <i class="fas fa-cogs facility-icon text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">کارگاه‌های تخصصی</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        کارگاه‌های تخصصی برای تعمیر و بازسازی موتور، سیستم‌های هیدرولیک، اویونیک و سایر قطعات هواپیما
+                    </p>
+                </div>
+                
+                <!-- Facility 6 -->
+                <div class="facility-card bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm hover:shadow-md">
+                    <div class="mb-4 text-gray-400 dark:text-gray-500">
+                        <i class="fas fa-box facility-icon text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">انبار قطعات</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        انبار وسیع قطعات یدکی اصلی و مورد تایید سازندگان هواپیما برای تامین سریع نیازهای تعمیراتی
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CTA Section -->
+    <div class="py-16 bg-gradient-primary">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-white mb-4">
+                    آماده همکاری با فارسکو هستید؟
+                </h2>
+                <p class="text-xl text-white/80 mb-8">
+                    با ما تماس بگیرید تا متخصصان ما به سوالات شما پاسخ دهند
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="/contact/" class="px-8 py-3 bg-white text-primary rounded-xl font-medium hover:bg-gray-100 transition-all">
+                        تماس با ما
+                    </a>
+                    <a href="/services/" class="px-8 py-3 bg-transparent border-2 border-white text-white rounded-xl font-medium hover:bg-white/10 transition-all">
+                        مشاهده خدمات
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Animation for counters
+    function animateCounters() {
+        const counters = document.querySelectorAll('.counter-card .text-5xl');
+        counters.forEach(counter => {
+            const target = counter.textContent;
+            const suffix = target.replace(/[0-9]/g, '');
+            const value = parseInt(target.replace(/\D/g, ''));
+            
+            let count = 0;
+            const duration = 2000; // 2 seconds
+            const increment = Math.ceil(value / (duration / 30)); // Update every 30ms
+            
+            const timer = setInterval(() => {
+                count += increment;
+                if (count >= value) {
+                    counter.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    counter.textContent = count + suffix;
+                }
+            }, 30);
+        });
+    }
+    
+    // Trigger animation when elements come into view
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if IntersectionObserver is supported
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            const counterSection = document.querySelector('.counter-card');
+            if (counterSection) {
+                observer.observe(counterSection);
+            }
+        } else {
+            // Fallback for browsers that don't support IntersectionObserver
+            animateCounters();
+        }
+    });
+</script>
+{% endblock %}
