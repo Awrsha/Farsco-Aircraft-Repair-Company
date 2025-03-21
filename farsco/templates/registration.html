@@ -1,0 +1,386 @@
+{% extends "base.html" %}
+
+{% block title %}ثبت‌نام | فارسکو{% endblock %}
+
+{% block extra_css %}
+.register-plane {
+    animation: register-rotate 15s linear infinite;
+    transform-origin: center;
+}
+
+@keyframes register-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.form-floating {
+    position: relative;
+}
+
+.form-floating > input,
+.form-floating > select {
+    height: 56px;
+    padding-top: 24px;
+    padding-bottom: 8px;
+}
+
+.form-floating > label {
+    position: absolute;
+    top: 0;
+    right: 12px;
+    height: 100%;
+    padding: 16px 0;
+    pointer-events: none;
+    border: 1px solid transparent;
+    transform-origin: right bottom;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-floating > input:focus ~ label,
+.form-floating > input:not(:placeholder-shown) ~ label,
+.form-floating > select:focus ~ label,
+.form-floating > select:not([value=""]):valid ~ label {
+    transform: translateY(-10px) scale(0.85);
+    opacity: 0.8;
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon > input,
+.input-with-icon > select {
+    padding-right: 40px;
+}
+
+.input-with-icon > i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+}
+
+.dark .input-with-icon > i {
+    color: #9ca3af;
+}
+
+.floating-label-icon {
+    right: 40px !important;
+}
+
+/* Password strength indicator */
+.password-strength {
+    height: 5px;
+    margin-top: 5px;
+    border-radius: 2.5px;
+    transition: all 0.3s ease;
+}
+
+.strength-0 {
+    width: 20%;
+    background-color: #ef4444;
+}
+
+.strength-1 {
+    width: 40%;
+    background-color: #f97316;
+}
+
+.strength-2 {
+    width: 60%;
+    background-color: #f59e0b;
+}
+
+.strength-3 {
+    width: 80%;
+    background-color: #84cc16;
+}
+
+.strength-4 {
+    width: 100%;
+    background-color: #10b981;
+}
+{% endblock %}
+
+{% block content %}
+<div class="flex justify-center min-h-screen pt-20 pb-12 animate-fade-in">
+    <div class="max-w-6xl w-full px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row">
+        <!-- Left side - Registration Form -->
+        <div class="lg:w-1/2 mb-10 lg:mb-0 flex flex-col justify-center">
+            <div class="max-w-lg mx-auto lg:mx-0 lg:ml-auto w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-10">
+                <!-- Form Header -->
+                <div class="text-center lg:text-right mb-8">
+                    <h2 class="text-2xl font-bold text-apple-text dark:text-white">ایجاد حساب کاربری</h2>
+                    <p class="mt-2 text-gray-600 dark:text-gray-300">به خانواده بزرگ فارسکو خوش آمدید!</p>
+                </div>
+                
+                <!-- Alert for errors (optional) -->
+                {% if form.errors %}
+                <div class="mb-6 p-4 rounded-md bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-exclamation-circle text-red-600 dark:text-red-400"></i>
+                        </div>
+                        <div class="mr-3">
+                            <p class="text-sm text-red-700 dark:text-red-400">
+                                لطفاً خطاهای زیر را برطرف کنید:
+                            </p>
+                            <ul class="mt-1 list-disc list-inside text-sm text-red-700 dark:text-red-400">
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                        <li>{{ field.label }}: {{ error }}</li>
+                                    {% endfor %}
+                                {% endfor %}
+                                {% for error in form.non_field_errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Registration Form -->
+                <form method="post" action="{% url 'registration' %}" class="space-y-5">
+                    {% csrf_token %}
+                    
+                    <!-- First and Last Name (Two columns) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="form-floating input-with-icon">
+                            <input type="text" name="first_name" id="first_name" required class="block w-full px-4 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:ring-primary focus:border-primary text-base" placeholder=" ">
+                            <i class="fas fa-user text-gray-400"></i>
+                            <label for="first_name" class="text-gray-500 dark:text-gray-400 floating-label-icon">نام</label>
+                        </div>
+                        
+                        <div class="form-floating input-with-icon">
+                            <input type="text" name="last_name" id="last_name" required class="block w-full px-4 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:ring-primary focus:border-primary text-base" placeholder=" ">
+                            <i class="fas fa-user text-gray-400"></i>
+                            <label for="last_name" class="text-gray-500 dark:text-gray-400 floating-label-icon">نام خانوادگی</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Username -->
+                    <div class="form-floating input-with-icon">
+                        <input type="text" name="username" id="username" required class="block w-full px-4 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:ring-primary focus:border-primary text-base" placeholder=" ">
+                        <i class="fas fa-at text-gray-400"></i>
+                        <label for="username" class="text-gray-500 dark:text-gray-400 floating-label-icon">نام کاربری</label>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div class="form-floating input-with-icon">
+                        <input type="email" name="email" id="email" required class="block w-full px-4 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:ring-primary focus:border-primary text-base" placeholder=" ">
+                        <i class="fas fa-envelope text-gray-400"></i>
+                        <label for="email" class="text-gray-500 dark:text-gray-400 floating-label-icon">آدرس ایمیل</label>
+                    </div>
+                    
+                    <!-- Phone -->
+                    <input type="tel" name="phone_number" id="phone" pattern="[0-9]{11}" required class="block w-full px-4 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:ring-primary focus:border-primary text-base" placeholder=" ">
+                    
+                    <!-- Password -->
+                    <div>
+                        <div class="form-floating input-with-icon">
+                            <input type="password" name="password1" id="password1" required class="block w-full px-4 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:ring-primary focus:border-primary text-base" placeholder=" " onkeyup="checkPasswordStrength()">
+                            <i class="fas fa-lock text-gray-400"></i>
+                            <label for="password1" class="text-gray-500 dark:text-gray-400 floating-label-icon">رمز عبور</label>
+                        </div>
+                        <div id="password-strength-meter" class="password-strength"></div>
+                        <p id="password-strength-text" class="mt-1 text-xs text-gray-500 dark:text-gray-400">رمز عبور باید حداقل 8 کاراکتر باشد</p>
+                    </div>
+                    
+                    <!-- Confirm Password -->
+                    <div class="form-floating input-with-icon">
+                        <input type="password" name="password2" id="password2" required class="block w-full px-4 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:ring-primary focus:border-primary text-base" placeholder=" " onkeyup="checkPasswordMatch()">
+                        <i class="fas fa-lock text-gray-400"></i>
+                        <label for="password2" class="text-gray-500 dark:text-gray-400 floating-label-icon">تکرار رمز عبور</label>
+                    </div>
+                    <p id="password-match-message" class="text-xs text-gray-500 dark:text-gray-400 hidden">رمزهای عبور مطابقت دارند</p>
+                    
+                    <!-- User Role -->
+                    <div class="form-floating input-with-icon">
+                        <select name="role" id="role" required class="block w-full px-4 rounded-xl border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:ring-primary focus:border-primary text-base" placeholder=" ">
+							<option value="" selected disabled></option>
+							<option value="STUDENT">دانشجو</option>
+							<option value="INSTRUCTOR">مدرس</option>
+							<option value="STAFF">کارمند فارسکو</option>
+						</select>
+                        <i class="fas fa-user-tag text-gray-400"></i>
+                        <label for="role" class="text-gray-500 dark:text-gray-400 floating-label-icon">نقش شما</label>
+                    </div>
+                    
+                    <!-- Terms and Conditions -->
+                    <div class="flex items-start">
+                        <div class="flex items-center h-5">
+							<input id="terms" name="has_accepted_terms" type="checkbox" required class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded">
+                        </div>
+                        <div class="mr-3 text-sm">
+                            <label for="terms" class="font-medium text-gray-700 dark:text-gray-300">
+                                <a href="/terms/" class="text-primary hover:text-primary-dark">قوانین و مقررات</a> و <a href="/privacy/" class="text-primary hover:text-primary-dark">حریم خصوصی</a> فارسکو را می‌پذیرم
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Register Button -->
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-base font-medium text-white gradient-animation hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all duration-200">
+                            ثبت‌نام
+                        </button>
+                    </div>
+                    
+                    <!-- Login prompt -->
+                    <div class="text-center mt-4">
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            قبلاً ثبت‌نام کرده‌اید؟
+                            <a href="{% url 'login' %}" class="font-medium text-primary hover:text-primary-dark">
+                                وارد شوید
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Right side - Illustration -->
+        <div class="lg:w-1/2 flex flex-col justify-center items-center lg:items-end">
+            <div class="max-w-lg w-full">
+                <!-- Title and description -->
+                <div class="text-center lg:text-right mb-8 lg:pr-8">
+                    <h2 class="text-3xl font-bold text-apple-text dark:text-white">عضویت در <span class="text-primary">فارسکو</span></h2>
+                    <p class="mt-3 text-lg text-gray-600 dark:text-gray-300">
+                        با ایجاد حساب کاربری، وارد دنیای تخصصی تعمیر و نگهداری هواپیما شوید.
+                    </p>
+                </div>
+                
+                <!-- Illustration -->
+                <div class="relative mx-auto w-full max-w-md">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/30 rounded-2xl transform rotate-3"></div>
+                    <div class="absolute inset-0 bg-white dark:bg-gray-800 rounded-2xl transform -rotate-3 opacity-80"></div>
+                    <div class="relative rounded-2xl overflow-hidden p-8 flex items-center justify-center">
+                        <div class="register-plane w-full h-full flex items-center justify-center">
+                            <div class="relative">
+                                <svg class="w-40 h-40 text-primary/20" fill="currentColor" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="50" cy="50" r="40" />
+                                </svg>
+                                <svg class="w-40 h-40 text-primary absolute top-0 left-0" fill="currentColor" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M92.5,35c-0.1-0.1-0.3-0.2-0.4-0.2c-0.1,0-0.3,0-0.4,0l-11.8,3.1L37.3,11.2c-0.3-0.2-0.6-0.2-0.9-0.1l-7.8,2.1
+                                    c-0.2,0.1-0.4,0.2-0.5,0.4c-0.1,0.2-0.1,0.4-0.1,0.7l3,14.3l-23.5,6.2c-0.2,0.1-0.4,0.2-0.5,0.4c-0.1,0.2-0.1,0.4-0.1,0.7l1.6,6.2
+                                    c0.1,0.2,0.2,0.4,0.4,0.5c0.2,0.1,0.4,0.1,0.6,0.1l23.5-6.2l9.8,12.9l-22,5.8c-0.2,0.1-0.4,0.2-0.5,0.4c-0.1,0.2-0.1,0.4-0.1,0.7l1.6,6.2
+                                    c0.1,0.2,0.2,0.4,0.4,0.5C22.3,62.1,22.4,62.1,22.6,62.1c0.1,0,0.1,0,0.2,0l22-5.8l3,14.3c0.1,0.2,0.2,0.4,0.4,0.5
+                                    c0.2,0.1,0.4,0.1,0.6,0.1l7.8-2.1c0.3-0.1,0.5-0.3,0.6-0.6l13.7-39.8l11.8-3.1c0.3-0.1,0.5-0.3,0.6-0.6c0.1-0.3,0.1-0.6-0.1-0.9L92.5,35z
+                                    M30.9,15.9l4.7-1.2l40.8,26.2l-45.2,12L30.9,15.9z M33.5,66.9l-4.7,1.2l-0.3-36.9l45.2-12L33.5,66.9z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Features list -->
+                <div class="mt-8 lg:pr-8">
+                    <ul class="space-y-4">
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-primary/20 dark:bg-primary/30 flex items-center justify-center">
+                                <i class="fas fa-check text-xs text-primary"></i>
+                            </div>
+                            <span class="mr-3">ثبت‌نام در دوره‌های تخصصی تعمیر و نگهداری هواپیما</span>
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-primary/20 dark:bg-primary/30 flex items-center justify-center">
+                                <i class="fas fa-check text-xs text-primary"></i>
+                            </div>
+                            <span class="mr-3">دسترسی به محتوای آموزشی و منابع تخصصی</span>
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-primary/20 dark:bg-primary/30 flex items-center justify-center">
+                                <i class="fas fa-check text-xs text-primary"></i>
+                            </div>
+                            <span class="mr-3">ارتباط با متخصصان صنعت هوانوردی</span>
+                        </li>
+                        <li class="flex items-center text-gray-600 dark:text-gray-300">
+                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-primary/20 dark:bg-primary/30 flex items-center justify-center">
+                                <i class="fas fa-check text-xs text-primary"></i>
+                            </div>
+                            <span class="mr-3">فرصت‌های شغلی و کارآموزی</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Password strength meter
+    function checkPasswordStrength() {
+        const password = document.getElementById('password1').value;
+        const meter = document.getElementById('password-strength-meter');
+        const text = document.getElementById('password-strength-text');
+        
+        // Reset the meter
+        meter.className = 'password-strength';
+        
+        if (!password) {
+            text.textContent = 'رمز عبور باید حداقل 8 کاراکتر باشد';
+            return;
+        }
+        
+        // Check the password strength
+        const strength = calculatePasswordStrength(password);
+        
+        // Update the meter
+        meter.classList.add(`strength-${strength}`);
+        
+        // Update the text message
+        const messages = [
+            'بسیار ضعیف',
+            'ضعیف',
+            'متوسط',
+            'خوب',
+            'عالی'
+        ];
+        
+        text.textContent = `قدرت رمز عبور: ${messages[strength]}`;
+    }
+    
+    function calculatePasswordStrength(password) {
+        // Simple password strength calculation based on length and character variety
+        let strength = 0;
+        
+        // Length check
+        if (password.length >= 8) strength += 1;
+        if (password.length >= 12) strength += 1;
+        
+        // Character variety checks
+        if (/[0-9]/.test(password)) strength += 1;
+        if (/[A-Z]/.test(password) && /[a-z]/.test(password)) strength += 1;
+        if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+        
+        return Math.min(4, strength);
+    }
+    
+    // Password match checker
+    function checkPasswordMatch() {
+        const password1 = document.getElementById('password1').value;
+        const password2 = document.getElementById('password2').value;
+        const message = document.getElementById('password-match-message');
+        
+        if (!password2) {
+            message.classList.add('hidden');
+            return;
+        }
+        
+        if (password1 === password2) {
+            message.textContent = 'رمزهای عبور مطابقت دارند';
+            message.classList.remove('hidden', 'text-red-500');
+            message.classList.add('text-green-500');
+        } else {
+            message.textContent = 'رمزهای عبور مطابقت ندارند';
+            message.classList.remove('hidden', 'text-green-500');
+            message.classList.add('text-red-500');
+        }
+    }
+</script>
+{% endblock %}

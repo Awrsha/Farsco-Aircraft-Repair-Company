@@ -1,0 +1,523 @@
+{% extends "base.html" %}
+
+{% block title %}خدمات | فارسکو{% endblock %}
+
+{% block extra_css %}
+.service-card {
+    transition: all 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.service-icon {
+    transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+    transform: scale(1.1);
+    color: #5D5CDE;
+}
+
+.accordion-item {
+    border-bottom: 1px solid rgba(209, 213, 219, 0.5);
+}
+
+.dark .accordion-item {
+    border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+}
+
+.accordion-button {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.accordion-button:hover {
+    color: #5D5CDE;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.accordion-content.active {
+    max-height: 500px;
+}
+
+.rotate-icon {
+    transition: transform 0.3s ease;
+}
+
+.rotate-icon.active {
+    transform: rotate(180deg);
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(90deg, #5D5CDE 0%, #8A89FF 100%);
+}
+
+.text-gradient {
+    background: linear-gradient(90deg, #5D5CDE 0%, #8A89FF 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in">
+    <!-- Hero Section -->
+    <div class="relative bg-white dark:bg-gray-900 py-20">
+        <div class="absolute inset-0 z-0 opacity-10 dark:opacity-20">
+            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <defs>
+                    <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.5" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" />
+            </svg>
+        </div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                    خدمات <span class="text-primary">تخصصی</span> فارسکو
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300">
+                    ارائه خدمات تخصصی تعمیر و نگهداری هواپیما با بالاترین استانداردهای بین‌المللی
+                </p>
+                <div class="mt-8 flex justify-center">
+                    <div class="h-1 w-20 bg-primary rounded"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Services Section -->
+    <div class="py-16 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">خدمات اصلی فارسکو</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    فارسکو با بهره‌گیری از متخصصان مجرب و تجهیزات پیشرفته، خدمات متنوعی را در حوزه تعمیر و نگهداری هواپیما ارائه می‌دهد.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service Card 1 -->
+                <div class="service-card bg-white dark:bg-gray-900 rounded-xl p-6 shadow-md">
+                    <div class="rounded-full bg-primary/10 dark:bg-primary/20 w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-cogs service-icon text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">تعمیرات موتور هواپیما</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        تیم مجرب ما قادر به انجام عملیات تعمیر و نگهداری انواع موتورهای هواپیما مطابق با استانداردهای روز دنیا می‌باشد.
+                    </p>
+                    <ul class="mt-4 space-y-2 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            تعمیرات اساسی (Overhaul)
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            تعویض قطعات موتور
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            بازرسی‌های دوره‌ای موتور
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            عیب‌یابی و رفع نقص
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="service-card bg-white dark:bg-gray-900 rounded-xl p-6 shadow-md">
+                    <div class="rounded-full bg-primary/10 dark:bg-primary/20 w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-search service-icon text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">بازرسی‌های فنی</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        انجام بازرسی‌های دوره‌ای و موردی هواپیما با استفاده از تجهیزات پیشرفته و کارشناسان مجرب فنی و مهندسی.
+                    </p>
+                    <ul class="mt-4 space-y-2 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            بازرسی‌های A-Check و B-Check
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            بازرسی‌های C-Check
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            بازرسی‌های D-Check (بازرسی اساسی)
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            بازرسی‌های NDT (غیرمخرب)
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="service-card bg-white dark:bg-gray-900 rounded-xl p-6 shadow-md">
+                    <div class="rounded-full bg-primary/10 dark:bg-primary/20 w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-plane service-icon text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">تعمیرات بدنه و سازه</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        رفع عیب و تعمیرات تخصصی بدنه و سازه هواپیما با استفاده از فناوری‌های نوین و متخصصان مجرب.
+                    </p>
+                    <ul class="mt-4 space-y-2 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            ترمیم سازه‌های اصلی هواپیما
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            تعمیر انواع خوردگی و ترک
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            تعویض پوشش‌های بدنه
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            بازسازی قطعات بدنه
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service Card 4 -->
+                <div class="service-card bg-white dark:bg-gray-900 rounded-xl p-6 shadow-md">
+                    <div class="rounded-full bg-primary/10 dark:bg-primary/20 w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-microchip service-icon text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">سیستم‌های الکترونیکی</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        تعمیر و نگهداری سیستم‌های الکترونیکی، اویونیک و ناوبری هواپیما با بهره‌گیری از متخصصان مجرب.
+                    </p>
+                    <ul class="mt-4 space-y-2 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            تعمیر سیستم‌های اویونیک
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            نگهداری تجهیزات ناوبری
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            عیب‌یابی سیستم‌های مخابراتی
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            به‌روزرسانی نرم‌افزارهای هواپیما
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service Card 5 -->
+                <div class="service-card bg-white dark:bg-gray-900 rounded-xl p-6 shadow-md">
+                    <div class="rounded-full bg-primary/10 dark:bg-primary/20 w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-graduation-cap service-icon text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">آموزش‌های تخصصی</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        برگزاری دوره‌های آموزشی برای تربیت نیروی متخصص در حوزه تعمیر و نگهداری هواپیما توسط اساتید مجرب.
+                    </p>
+                    <ul class="mt-4 space-y-2 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            دوره‌های مکانیک هواپیما
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            آموزش تخصصی موتور هواپیما
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            دوره‌های اویونیک هواپیما
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            آموزش‌های NDT و بازرسی فنی
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Service Card 6 -->
+                <div class="service-card bg-white dark:bg-gray-900 rounded-xl p-6 shadow-md">
+                    <div class="rounded-full bg-primary/10 dark:bg-primary/20 w-16 h-16 flex items-center justify-center mb-6">
+                        <i class="fas fa-certificate service-icon text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">صدور گواهینامه‌ها</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        صدور گواهینامه‌های فنی و تاییدیه‌های مورد نیاز برای پرواز ایمن هواپیما مطابق با استانداردهای بین‌المللی.
+                    </p>
+                    <ul class="mt-4 space-y-2 text-gray-600 dark:text-gray-300">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            گواهینامه‌های قابلیت پرواز
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            تاییدیه‌های تعمیرات
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            مجوزهای عملیاتی
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            گواهینامه‌های بازرسی فنی
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Process Section -->
+    <div class="py-16 bg-white dark:bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">فرآیند ارائه خدمات</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    فرآیند کامل ارائه خدمات در شرکت فارسکو به منظور اطمینان از کیفیت و استانداردهای بین‌المللی
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Process Step 1 -->
+                <div class="text-center">
+                    <div class="relative">
+                        <div class="w-20 h-20 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-bold text-primary">۱</span>
+                        </div>
+                        <div class="hidden lg:block absolute top-10 left-full h-0.5 w-full bg-gray-200 dark:bg-gray-700 -z-10 transform -translate-x-1/2"></div>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">بررسی اولیه</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        بررسی وضعیت فعلی هواپیما، شناسایی نیازها و ارائه برنامه کاری
+                    </p>
+                </div>
+
+                <!-- Process Step 2 -->
+                <div class="text-center">
+                    <div class="relative">
+                        <div class="w-20 h-20 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-bold text-primary">۲</span>
+                        </div>
+                        <div class="hidden lg:block absolute top-10 left-full h-0.5 w-full bg-gray-200 dark:bg-gray-700 -z-10 transform -translate-x-1/2"></div>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">برنامه‌ریزی</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        تهیه طرح عملیاتی، برآورد زمان و هزینه، و تخصیص منابع مورد نیاز
+                    </p>
+                </div>
+
+                <!-- Process Step 3 -->
+                <div class="text-center">
+                    <div class="relative">
+                        <div class="w-20 h-20 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center mx-auto mb-4">
+                            <span class="text-2xl font-bold text-primary">۳</span>
+                        </div>
+                        <div class="hidden lg:block absolute top-10 left-full h-0.5 w-full bg-gray-200 dark:bg-gray-700 -z-10 transform -translate-x-1/2"></div>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">اجرای عملیات</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        انجام فرآیند تعمیر و نگهداری توسط متخصصان مجرب و با تجهیزات پیشرفته
+                    </p>
+                </div>
+
+                <!-- Process Step 4 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold text-primary">۴</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">کنترل کیفیت و تحویل</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        بررسی نهایی، آزمایش‌های استاندارد، صدور تاییدیه و تحویل به مشتری
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Certifications Section -->
+    <div class="py-16 bg-gray-50 dark:bg-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">گواهینامه‌ها و افتخارات</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    فارسکو با دریافت گواهینامه‌های معتبر بین‌المللی، تعهد خود را به ارائه خدمات با بالاترین کیفیت نشان داده است.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Certification 1 -->
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-md text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-award text-5xl text-primary"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">ISO 9001:2015</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        استاندارد بین‌المللی سیستم مدیریت کیفیت
+                    </p>
+                </div>
+
+                <!-- Certification 2 -->
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-md text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-shield-alt text-5xl text-primary"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">AS9100</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        استاندارد مدیریت کیفیت در صنعت هوا-فضا
+                    </p>
+                </div>
+
+                <!-- Certification 3 -->
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-md text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-plane-departure text-5xl text-primary"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">EASA Part-145</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        مجوز تعمیر و نگهداری از آژانس ایمنی هوانوردی اروپا
+                    </p>
+                </div>
+
+                <!-- Certification 4 -->
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-md text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-certificate text-5xl text-primary"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">FAA Repair Station</h3>
+                    <p class="text-gray-600 dark:text-gray-300">
+                        مجوز ایستگاه تعمیراتی از اداره هوانوردی فدرال آمریکا
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQs Section -->
+    <div class="py-16 bg-white dark:bg-gray-900">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white">سوالات متداول</h2>
+                <p class="mt-4 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    پاسخ به سوالات رایج مشتریان در مورد خدمات تعمیر و نگهداری هواپیما
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto">
+                <div class="accordion">
+                    <!-- FAQ Item 1 -->
+                    <div class="accordion-item py-4">
+                        <div class="accordion-button flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">فرآیند درخواست خدمات تعمیر و نگهداری چگونه است؟</h3>
+                            <i class="fas fa-chevron-down text-gray-500 dark:text-gray-400 rotate-icon"></i>
+                        </div>
+                        <div class="accordion-content mt-2 text-gray-600 dark:text-gray-300">
+                            <p>برای درخواست خدمات تعمیر و نگهداری هواپیما، ابتدا می‌توانید از طریق شماره تماس یا ایمیل با ما ارتباط برقرار کنید. پس از دریافت درخواست، کارشناسان ما برای ارزیابی اولیه با شما تماس خواهند گرفت. سپس با توجه به نیازهای شما، برنامه زمانی و هزینه‌های مربوطه را اعلام خواهیم کرد. پس از توافق، فرآیند تعمیر و نگهداری آغاز خواهد شد.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="accordion-item py-4">
+                        <div class="accordion-button flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">مدت زمان تعمیرات چقدر است؟</h3>
+                            <i class="fas fa-chevron-down text-gray-500 dark:text-gray-400 rotate-icon"></i>
+                        </div>
+                        <div class="accordion-content mt-2 text-gray-600 dark:text-gray-300">
+                            <p>مدت زمان تعمیرات بستگی به نوع و حجم عملیات مورد نیاز دارد. بازرسی‌های ساده ممکن است چند روز طول بکشد، در حالی که تعمیرات اساسی (مانند D-Check) ممکن است نیاز به چند هفته تا چند ماه زمان داشته باشد. پس از بررسی اولیه، برنامه زمانی دقیق به شما اعلام خواهد شد.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="accordion-item py-4">
+                        <div class="accordion-button flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">آیا قطعات مورد استفاده در تعمیرات دارای گارانتی هستند؟</h3>
+                            <i class="fas fa-chevron-down text-gray-500 dark:text-gray-400 rotate-icon"></i>
+                        </div>
+                        <div class="accordion-content mt-2 text-gray-600 dark:text-gray-300">
+                            <p>بله، تمامی قطعات مورد استفاده در تعمیرات فارسکو دارای گارانتی معتبر هستند. ما از قطعات اصلی و مورد تایید سازندگان هواپیما استفاده می‌کنیم و تمامی قطعات دارای شناسنامه فنی و گواهی اصالت هستند. مدت زمان گارانتی بسته به نوع قطعه متفاوت است و در زمان تحویل، جزئیات گارانتی به شما اعلام خواهد شد.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="accordion-item py-4">
+                        <div class="accordion-button flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">فارسکو چه نوع هواپیماهایی را پوشش می‌دهد؟</h3>
+                            <i class="fas fa-chevron-down text-gray-500 dark:text-gray-400 rotate-icon"></i>
+                        </div>
+                        <div class="accordion-content mt-2 text-gray-600 dark:text-gray-300">
+                            <p>فارسکو قادر به ارائه خدمات تعمیر و نگهداری برای انواع هواپیماهای تجاری و مسافربری از جمله بوئینگ (سری 737، 747، 777)، ایرباس (سری A320، A330، A340)، ATR، فوکر و برخی هواپیماهای کوچک و متوسط است. برای اطلاعات دقیق‌تر در مورد مدل خاصی از هواپیما، با کارشناسان ما تماس بگیرید.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 5 -->
+                    <div class="accordion-item py-4">
+                        <div class="accordion-button flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)">
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">آیا فارسکو خدمات آموزشی برای خلبانان و مهندسان پرواز ارائه می‌دهد؟</h3>
+                            <i class="fas fa-chevron-down text-gray-500 dark:text-gray-400 rotate-icon"></i>
+                        </div>
+                        <div class="accordion-content mt-2 text-gray-600 dark:text-gray-300">
+                            <p>بله، فارسکو دوره‌های آموزشی متنوعی برای مهندسان هواپیما، تکنسین‌های فنی و کارشناسان تعمیر و نگهداری ارائه می‌دهد. این دوره‌ها شامل آموزش‌های تخصصی مکانیک هواپیما، موتور، اویونیک و بازرسی‌های فنی است. همچنین دوره‌های خاصی برای خلبانان در زمینه آشنایی با سیستم‌های هواپیما برگزار می‌کنیم. برای اطلاع از تقویم دوره‌های آموزشی، به بخش دوره‌ها مراجعه کنید.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="py-16 bg-gradient-primary">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-white mb-4">
+                    برای دریافت خدمات تخصصی تعمیر و نگهداری هواپیما با ما تماس بگیرید
+                </h2>
+                <p class="text-xl text-white/80 mb-8">
+                    کارشناسان ما آماده پاسخگویی به سوالات شما هستند
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="/contact/" class="px-8 py-3 bg-white text-primary rounded-xl font-medium hover:bg-gray-100 transition-all">
+                        تماس با ما
+                    </a>
+                    <a href="/courses/" class="px-8 py-3 bg-transparent border-2 border-white text-white rounded-xl font-medium hover:bg-white/10 transition-all">
+                        مشاهده دوره‌ها
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function toggleAccordion(element) {
+        // Toggle active class on the button
+        element.classList.toggle('text-primary');
+        
+        // Toggle active class on icon
+        const icon = element.querySelector('.rotate-icon');
+        icon.classList.toggle('active');
+        
+        // Toggle the content
+        const content = element.nextElementSibling;
+        content.classList.toggle('active');
+    }
+</script>
+{% endblock %}

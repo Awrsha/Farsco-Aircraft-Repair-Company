@@ -1,0 +1,678 @@
+{% extends "base.html" %}
+
+{% block title %}دوره‌های آموزشی | فارسکو{% endblock %}
+
+{% block extra_css %}
+.course-card {
+    transition: all 0.3s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+}
+
+.course-card:hover .course-image img {
+    transform: scale(1.05);
+}
+
+.course-image {
+    overflow: hidden;
+}
+
+.course-image img {
+    transition: transform 0.5s ease;
+}
+
+.filter-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+.filter-dropdown.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Badge animation */
+@keyframes pulse-badge {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.animate-badge {
+    animation: pulse-badge 2s infinite;
+}
+
+/* Skeleton loading */
+.skeleton {
+    background: linear-gradient(90deg, 
+        rgba(226, 232, 240, 0.8) 25%, 
+        rgba(226, 232, 240, 0.5) 50%, 
+        rgba(226, 232, 240, 0.8) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.dark .skeleton {
+    background: linear-gradient(90deg, 
+        rgba(75, 85, 99, 0.8) 25%, 
+        rgba(75, 85, 99, 0.5) 50%, 
+        rgba(75, 85, 99, 0.8) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.course-level-beginner {
+    background-color: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+}
+
+.dark .course-level-beginner {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+}
+
+.course-level-intermediate {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+}
+
+.dark .course-level-intermediate {
+    background-color: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+}
+
+.course-level-advanced {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #d97706;
+}
+
+.dark .course-level-advanced {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+}
+
+.course-level-expert {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+}
+
+.dark .course-level-expert {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+{% endblock %}
+
+{% block content %}
+<div class="pt-20 pb-16">
+    <!-- Hero Section with Search -->
+    <div class="bg-apple-gray dark:bg-gray-900 py-12 sm:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-3xl font-extrabold tracking-tight text-apple-text dark:text-white sm:text-4xl">
+                    دوره‌های آموزشی <span class="text-primary">فارسکو</span>
+                </h1>
+                <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-600 dark:text-gray-300">
+                    دسترسی به دوره‌های تخصصی تعمیر و نگهداری هواپیما با مدرسان مجرب صنعت هوانوردی
+                </p>
+                <div class="mt-8 max-w-xl mx-auto">
+                    <form class="relative flex w-full flex-wrap">
+                        <div class="relative w-full rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
+                            <input type="text" id="search-courses" name="search" class="block w-full pl-4 pr-10 py-3 border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:ring-primary focus:border-primary rounded-md text-base" placeholder="جستجوی دوره‌ها...">
+                            <div class="absolute inset-y-0 left-0 flex items-center">
+                                <button type="submit" class="h-full px-4 text-primary focus:outline-none focus:ring-2 focus:ring-primary">
+                                    جستجو
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+            <!-- Filters Sidebar -->
+            <div class="hidden lg:block lg:col-span-3 xl:col-span-2">
+                <div class="sticky top-24">
+                    <h2 class="text-xl font-bold text-apple-text dark:text-white mb-4">فیلترها</h2>
+                    
+                    <!-- Category Filter -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase mb-3">دسته‌بندی</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <input id="category-all" name="category" type="radio" checked class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600">
+                                <label for="category-all" class="mr-2 text-sm text-gray-700 dark:text-gray-300">همه دوره‌ها</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="category-mechanical" name="category" type="radio" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600">
+                                <label for="category-mechanical" class="mr-2 text-sm text-gray-700 dark:text-gray-300">مکانیک هواپیما</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="category-avionics" name="category" type="radio" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600">
+                                <label for="category-avionics" class="mr-2 text-sm text-gray-700 dark:text-gray-300">اویونیک</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="category-engine" name="category" type="radio" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600">
+                                <label for="category-engine" class="mr-2 text-sm text-gray-700 dark:text-gray-300">موتور هواپیما</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="category-structure" name="category" type="radio" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600">
+                                <label for="category-structure" class="mr-2 text-sm text-gray-700 dark:text-gray-300">سازه و بدنه</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="category-safety" name="category" type="radio" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600">
+                                <label for="category-safety" class="mr-2 text-sm text-gray-700 dark:text-gray-300">ایمنی پرواز</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Level Filter -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase mb-3">سطح دوره</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <input id="level-all" name="level" type="checkbox" checked class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600 rounded">
+                                <label for="level-all" class="mr-2 text-sm text-gray-700 dark:text-gray-300">همه سطوح</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="level-beginner" name="level" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600 rounded">
+                                <label for="level-beginner" class="mr-2 text-sm text-gray-700 dark:text-gray-300">مقدماتی</label>
+                                <span class="mr-auto px-2 py-0.5 text-xs rounded-full course-level-beginner">مقدماتی</span>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="level-intermediate" name="level" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600 rounded">
+                                <label for="level-intermediate" class="mr-2 text-sm text-gray-700 dark:text-gray-300">متوسط</label>
+                                <span class="mr-auto px-2 py-0.5 text-xs rounded-full course-level-intermediate">متوسط</span>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="level-advanced" name="level" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600 rounded">
+                                <label for="level-advanced" class="mr-2 text-sm text-gray-700 dark:text-gray-300">پیشرفته</label>
+                                <span class="mr-auto px-2 py-0.5 text-xs rounded-full course-level-advanced">پیشرفته</span>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="level-expert" name="level" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600 rounded">
+                                <label for="level-expert" class="mr-2 text-sm text-gray-700 dark:text-gray-300">تخصصی</label>
+                                <span class="mr-auto px-2 py-0.5 text-xs rounded-full course-level-expert">تخصصی</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Duration Filter -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase mb-3">مدت دوره</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <input id="duration-all" name="duration" type="radio" checked class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600">
+                                <label for="duration-all" class="mr-2 text-sm text-gray-700 dark:text-gray-300">همه دوره‌ها</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="duration-short" name="duration" type="radio" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600">
+                                <label for="duration-short" class="mr-2 text-sm text-gray-700 dark:text-gray-300">کمتر از ۱۰۰ ساعت</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="duration-medium" name="duration" type="radio" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600">
+                                <label for="duration-medium" class="mr-2 text-sm text-gray-700 dark:text-gray-300">۱۰۰ تا ۲۰۰ ساعت</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="duration-long" name="duration" type="radio" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600">
+                                <label for="duration-long" class="mr-2 text-sm text-gray-700 dark:text-gray-300">بیش از ۲۰۰ ساعت</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Price Filter -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase mb-3">قیمت</h3>
+                        <input type="range" min="0" max="100" value="100" class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between mt-2">
+                            <span class="text-xs text-gray-500 dark:text-gray-400">رایگان</span>
+                            <span class="text-xs text-gray-500 dark:text-gray-400"><span id="price-value">۲۰،۰۰۰،۰۰۰</span> تومان</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Reset Filters -->
+                    <button class="w-full py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        پاک کردن فیلترها
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Filters -->
+            <div class="lg:hidden mb-6 sticky top-16 z-10 bg-white dark:bg-apple-dark pt-4 pb-2 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <span class="text-sm text-gray-500 dark:text-gray-400">نمایش ۱-۹ از ۲۴ دوره</span>
+                    </div>
+                    <div class="relative">
+                        <button id="mobile-filter-button" class="flex items-center justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            <i class="fas fa-filter ml-2"></i>
+                            فیلترها
+                        </button>
+                        
+                        <div id="mobile-filter-dropdown" class="filter-dropdown bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 p-4">
+                            <!-- Mobile Filter Content -->
+                            <div class="mb-4">
+                                <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase mb-2">دسته‌بندی</h3>
+                                <select class="block w-full py-2 px-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary text-sm">
+                                    <option>همه دوره‌ها</option>
+                                    <option>مکانیک هواپیما</option>
+                                    <option>اویونیک</option>
+                                    <option>موتور هواپیما</option>
+                                    <option>سازه و بدنه</option>
+                                    <option>ایمنی پرواز</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase mb-2">سطح دوره</h3>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="flex items-center">
+                                        <input id="mobile-level-beginner" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600 rounded">
+                                        <label for="mobile-level-beginner" class="mr-2 text-sm text-gray-700 dark:text-gray-300">مقدماتی</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input id="mobile-level-intermediate" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600 rounded">
+                                        <label for="mobile-level-intermediate" class="mr-2 text-sm text-gray-700 dark:text-gray-300">متوسط</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input id="mobile-level-advanced" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600 rounded">
+                                        <label for="mobile-level-advanced" class="mr-2 text-sm text-gray-700 dark:text-gray-300">پیشرفته</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input id="mobile-level-expert" type="checkbox" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 dark:border-gray-600 rounded">
+                                        <label for="mobile-level-expert" class="mr-2 text-sm text-gray-700 dark:text-gray-300">تخصصی</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between mt-4">
+                                <button class="py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                    پاک کردن
+                                </button>
+                                <button class="py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                    اعمال فیلترها
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chips for active filters -->
+                <div class="flex flex-wrap gap-2 mt-2">
+                    <div class="inline-flex items-center py-1 px-2 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full text-xs">
+                        <span>مکانیک هواپیما</span>
+                        <button class="mr-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="inline-flex items-center py-1 px-2 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full text-xs">
+                        <span>متوسط</span>
+                        <button class="mr-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Course Grid -->
+            <div class="lg:col-span-9 xl:col-span-10">
+                <!-- Sort and View Options -->
+                <div class="flex justify-between items-center mb-8 border-b border-gray-200 dark:border-gray-700 pb-4 pt-2">
+                    <div class="hidden sm:flex items-center">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">نمایش ۱-۹ از ۲۴ دوره</span>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4 space-x-reverse">
+                        <div class="relative">
+                            <select class="block w-full py-2 px-3 pr-8 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary text-sm">
+                                <option>مرتب‌سازی بر اساس محبوبیت</option>
+                                <option>جدیدترین</option>
+                                <option>ارزان‌ترین</option>
+                                <option>گران‌ترین</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2 space-x-reverse">
+                            <button class="p-1.5 rounded bg-primary text-white">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                            <button class="p-1.5 rounded text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <i class="fas fa-list"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Courses Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Course 1 -->
+                    <div class="course-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                        <div class="course-image relative h-44">
+                            <img src="https://s6.uupload.ir/files/img-01_0ufy.jpg" alt="دوره مبانی مکانیک هواپیما" class="w-full h-full object-cover">
+                            <div class="absolute top-2 left-2">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium course-level-beginner">مقدماتی</span>
+                            </div>
+                            <div class="absolute top-2 right-2">
+                                <span class="px-2 py-1 bg-primary/80 text-white rounded-full text-xs font-medium animate-badge">پرطرفدار</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center mb-2">
+                                <span class="text-gray-600 dark:text-gray-400 text-sm">مکانیک هواپیما</span>
+                                <span class="mx-2 text-gray-300 dark:text-gray-600">|</span>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 mr-1">۴.۸</span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-500">(۱۲۵)</span>
+                                </div>
+                            </div>
+                            <h3 class="font-bold text-lg text-apple-text dark:text-white mb-2">دوره مبانی مکانیک هواپیما</h3>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-3 h-12 overflow-hidden">آشنایی با اصول اولیه مکانیک هواپیما و سیستم‌های مختلف آن برای علاقه‌مندان به صنعت هوانوردی</p>
+                            <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm mb-4">
+                                <div class="flex items-center ml-4">
+                                    <i class="fas fa-user-tie ml-1"></i>
+                                    <span>دکتر محمدی</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-clock ml-1"></i>
+                                    <span>۲۴۰ ساعت</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700">
+                                <span class="font-bold text-primary">۷،۵۰۰،۰۰۰ تومان</span>
+                                <a href="/courses/1/" class="py-1.5 px-3 text-sm bg-primary/10 text-primary dark:bg-primary/20 rounded-md hover:bg-primary hover:text-white transition">اطلاعات بیشتر</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course 2 -->
+                    <div class="course-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                        <div class="course-image relative h-44">
+                            <img src="https://s6.uupload.ir/files/img-02_56b3.jpg" alt="دوره تعمیرات موتور هواپیما" class="w-full h-full object-cover">
+                            <div class="absolute top-2 left-2">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium course-level-intermediate">متوسط</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center mb-2">
+                                <span class="text-gray-600 dark:text-gray-400 text-sm">موتور هواپیما</span>
+                                <span class="mx-2 text-gray-300 dark:text-gray-600">|</span>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 mr-1">۴.۶</span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-500">(۸۷)</span>
+                                </div>
+                            </div>
+                            <h3 class="font-bold text-lg text-apple-text dark:text-white mb-2">دوره تعمیرات موتور هواپیما</h3>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-3 h-12 overflow-hidden">آموزش تخصصی تعمیر و نگهداری انواع موتورهای هواپیما با استفاده از تجهیزات پیشرفته</p>
+                            <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm mb-4">
+                                <div class="flex items-center ml-4">
+                                    <i class="fas fa-user-tie ml-1"></i>
+                                    <span>مهندس رضایی</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-clock ml-1"></i>
+                                    <span>۳۲۰ ساعت</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700">
+                                <span class="font-bold text-primary">۱۲،۹۰۰،۰۰۰ تومان</span>
+                                <a href="/courses/2/" class="py-1.5 px-3 text-sm bg-primary/10 text-primary dark:bg-primary/20 rounded-md hover:bg-primary hover:text-white transition">اطلاعات بیشتر</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course 3 -->
+                    <div class="course-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                        <div class="course-image relative h-44">
+                            <img src="https://s6.uupload.ir/files/img-03_ur4d.jpg" alt="دوره اویونیک هواپیما" class="w-full h-full object-cover">
+                            <div class="absolute top-2 left-2">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium course-level-advanced">پیشرفته</span>
+                            </div>
+                            <div class="absolute top-2 right-2">
+                                <span class="px-2 py-1 bg-red-500/80 text-white rounded-full text-xs font-medium animate-badge">جدید</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center mb-2">
+                                <span class="text-gray-600 dark:text-gray-400 text-sm">اویونیک</span>
+                                <span class="mx-2 text-gray-300 dark:text-gray-600">|</span>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 mr-1">۴.۹</span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-500">(۵۶)</span>
+                                </div>
+                            </div>
+                            <h3 class="font-bold text-lg text-apple-text dark:text-white mb-2">دوره اویونیک هواپیما</h3>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-3 h-12 overflow-hidden">آموزش سیستم‌های الکترونیکی و اویونیک هواپیماهای مدرن به همراه عیب‌یابی و رفع مشکلات</p>
+                            <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm mb-4">
+                                <div class="flex items-center ml-4">
+                                    <i class="fas fa-user-tie ml-1"></i>
+                                    <span>دکتر عباسی</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-clock ml-1"></i>
+                                    <span>۲۸۰ ساعت</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700">
+                                <span class="font-bold text-primary">۱۵،۲۰۰،۰۰۰ تومان</span>
+                                <a href="/courses/3/" class="py-1.5 px-3 text-sm bg-primary/10 text-primary dark:bg-primary/20 rounded-md hover:bg-primary hover:text-white transition">اطلاعات بیشتر</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course 4 -->
+                    <div class="course-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                        <div class="course-image relative h-44">
+                            <img src="https://s6.uupload.ir/files/1.5-3-scaled_t2bt.jpg" alt="دوره ایمنی پرواز" class="w-full h-full object-cover">
+                            <div class="absolute top-2 left-2">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium course-level-beginner">مقدماتی</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center mb-2">
+                                <span class="text-gray-600 dark:text-gray-400 text-sm">ایمنی پرواز</span>
+                                <span class="mx-2 text-gray-300 dark:text-gray-600">|</span>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 mr-1">۴.۵</span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-500">(۱۰۲)</span>
+                                </div>
+                            </div>
+                            <h3 class="font-bold text-lg text-apple-text dark:text-white mb-2">دوره ایمنی پرواز</h3>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-3 h-12 overflow-hidden">آشنایی با اصول ایمنی در صنعت هوانوردی و روش‌های پیشگیری از سوانح هوایی</p>
+                            <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm mb-4">
+                                <div class="flex items-center ml-4">
+                                    <i class="fas fa-user-tie ml-1"></i>
+                                    <span>مهندس کریمی</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-clock ml-1"></i>
+                                    <span>۱۶۰ ساعت</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700">
+                                <span class="font-bold text-primary">۶،۸۰۰،۰۰۰ تومان</span>
+                                <a href="/courses/4/" class="py-1.5 px-3 text-sm bg-primary/10 text-primary dark:bg-primary/20 rounded-md hover:bg-primary hover:text-white transition">اطلاعات بیشتر</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course 5 -->
+                    <div class="course-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                        <div class="course-image relative h-44">
+                            <img src="https://s6.uupload.ir/files/dsc_1628-scaled-600x401_w9wk.jpg" alt="دوره آیرودینامیک کاربردی" class="w-full h-full object-cover">
+                            <div class="absolute top-2 left-2">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium course-level-intermediate">متوسط</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center mb-2">
+                                <span class="text-gray-600 dark:text-gray-400 text-sm">مکانیک هواپیما</span>
+                                <span class="mx-2 text-gray-300 dark:text-gray-600">|</span>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 mr-1">۴.۷</span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-500">(۹۱)</span>
+                                </div>
+                            </div>
+                            <h3 class="font-bold text-lg text-apple-text dark:text-white mb-2">دوره آیرودینامیک کاربردی</h3>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-3 h-12 overflow-hidden">آشنایی با اصول آیرودینامیک و کاربرد آن در طراحی، تعمیر و نگهداری هواپیما</p>
+                            <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm mb-4">
+                                <div class="flex items-center ml-4">
+                                    <i class="fas fa-user-tie ml-1"></i>
+                                    <span>دکتر اکبری</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-clock ml-1"></i>
+                                    <span>۲۰۰ ساعت</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700">
+                                <span class="font-bold text-primary">۹،۸۰۰،۰۰۰ تومان</span>
+                                <a href="/courses/5/" class="py-1.5 px-3 text-sm bg-primary/10 text-primary dark:bg-primary/20 rounded-md hover:bg-primary hover:text-white transition">اطلاعات بیشتر</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course 6 -->
+                    <div class="course-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                        <div class="course-image relative h-44">
+                            <img src="https://s6.uupload.ir/files/ndt_vmfr.png" alt="دوره سیستم‌های هیدرولیک هواپیما" class="w-full h-full object-cover">
+                            <div class="absolute top-2 left-2">
+                                <span class="px-2 py-1 rounded-full text-xs font-medium course-level-advanced">پیشرفته</span>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="flex items-center mb-2">
+                                <span class="text-gray-600 dark:text-gray-400 text-sm">مکانیک هواپیما</span>
+                                <span class="mx-2 text-gray-300 dark:text-gray-600">|</span>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 mr-1">۴.۸</span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-500">(۷۸)</span>
+                                </div>
+                            </div>
+                            <h3 class="font-bold text-lg text-apple-text dark:text-white mb-2">دوره سیستم‌های هیدرولیک هواپیما</h3>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mb-3 h-12 overflow-hidden">آموزش عملکرد، تعمیر و نگهداری سیستم‌های هیدرولیک مورد استفاده در هواپیماهای مدرن</p>
+                            <div class="flex items-center text-gray-500 dark:text-gray-400 text-sm mb-4">
+                                <div class="flex items-center ml-4">
+                                    <i class="fas fa-user-tie ml-1"></i>
+                                    <span>مهندس حسینی</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-clock ml-1"></i>
+                                    <span>۲۴۰ ساعت</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700">
+                                <span class="font-bold text-primary">۱۴،۵۰۰،۰۰۰ تومان</span>
+                                <a href="/courses/6/" class="py-1.5 px-3 text-sm bg-primary/10 text-primary dark:bg-primary/20 rounded-md hover:bg-primary hover:text-white transition">اطلاعات بیشتر</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Skeleton loading cards for remaining items -->
+                    {% for i in skeleton_range %}
+                    <div class="course-card bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                        <div class="skeleton h-44"></div>
+                        <div class="p-4">
+                            <div class="skeleton h-4 w-3/4 rounded mb-2"></div>
+                            <div class="skeleton h-6 w-full rounded mb-2"></div>
+                            <div class="skeleton h-4 w-full rounded mb-1"></div>
+                            <div class="skeleton h-4 w-5/6 rounded mb-4"></div>
+                            <div class="skeleton h-4 w-2/3 rounded mb-4"></div>
+                            <div class="pt-3 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                                <div class="skeleton h-6 w-1/3 rounded"></div>
+                                <div class="skeleton h-8 w-1/4 rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Pagination -->
+                <div class="mt-12 flex justify-center">
+                    <nav class="inline-flex items-center space-x-1 space-x-reverse">
+                        <a href="#" class="py-2 px-3 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-300 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <span class="sr-only">قبلی</span>
+                            <i class="fas fa-chevron-right text-sm"></i>
+                        </a>
+                        
+                        <a href="#" class="py-2 px-4 bg-primary text-white rounded-md border border-primary">
+                            ۱
+                        </a>
+                        <a href="#" class="py-2 px-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            ۲
+                        </a>
+                        <a href="#" class="py-2 px-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            ۳
+                        </a>
+                        
+                        <span class="py-2 px-2 text-gray-500 dark:text-gray-400">...</span>
+                        
+                        <a href="#" class="py-2 px-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            ۸
+                        </a>
+                        
+                        <a href="#" class="py-2 px-3 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-300 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <span class="sr-only">بعدی</span>
+                            <i class="fas fa-chevron-left text-sm"></i>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Mobile filter dropdown toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterButton = document.getElementById('mobile-filter-button');
+        const filterDropdown = document.getElementById('mobile-filter-dropdown');
+        
+        if (filterButton && filterDropdown) {
+            filterButton.addEventListener('click', function() {
+                filterDropdown.classList.toggle('show');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!filterButton.contains(event.target) && !filterDropdown.contains(event.target)) {
+                    filterDropdown.classList.remove('show');
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
